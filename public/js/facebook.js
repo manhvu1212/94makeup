@@ -7,7 +7,6 @@ var FACEBOOK = {
                 status: true,
                 version: facebookAppApi
             });
-
         };
 
         (function (d, s, id) {
@@ -20,11 +19,26 @@ var FACEBOOK = {
             js.src = "//connect.facebook.net/vi_VN/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+    },
+    share: function () {
+        $('#facebook-share').click(function () {
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    console.log('Logged in.');
+                }
+                else {
+                    FB.login(function(response) {
+
+                    }, {
+                        scope: 'email'
+                    });
+                }
+            });
+        });
     }
 };
 
 $(document).ready(function () {
-    $('#facebook-share').click(function() {
-        FACEBOOK.init();
-    });
+    FACEBOOK.init();
+    FACEBOOK.share();
 });
