@@ -1,0 +1,10 @@
+{
+  "name": "94makeup",
+  "description": "ecommerce cosmetic",
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/manhvu1212/94makeup",
+  "dependencies": {
+    "jquery": "^2.2.3"
+  }
+}
