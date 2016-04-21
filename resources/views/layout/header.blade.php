@@ -11,9 +11,9 @@
                 <li><a href="my-account.html">Register</a></li>
             </ul>
 
-            <div class="live_chat"><a href="javascript:void(0);"><i class="fa fa-comment-o"></i> Live chat</a></div>
+            <div class="live_chat"><a href="https://www.facebook.com/messages/538712199668656" target="_blank"><i class="fa fa-comment-o"></i> Live chat</a></div>
 
-            <div class="phone_top">have a question? <a href="tel:1 800 888 2828">1 800 888 2828</a></div>
+            <div class="phone_top">Hotline? <a href="tel:0163 570 9612">0163 570 9612</a></div>
         </div><!-- //CONTAINER -->
     </div><!-- TOP INFO -->
 
@@ -26,9 +26,36 @@
 
             <!-- LOGO -->
             <div class="logo">
-                <a href="index.html"><img src="/public/glammy/images/logo.png" alt=""/></a>
+                <a href="{!! route('homepage') !!}"><img src="/public/glammy/images/logo.png" alt=""/></a>
             </div><!-- //LOGO -->
 
+            <!-- USER LOGIN -->
+            <div class="user_login" ng-show="loginStatus.status == 'connected'">
+                <a class="user_login_btn" href="javascript:void(0);">
+                    <img class="img-responsive" ng-src="@{{apiMe.avatar}}">
+                </a>
+                <div class="cart">
+                    <ul class="cart-items">
+                        <li class="clearfix">
+                            <div class="user_info">
+                                Chào mừng
+                                <h3>@{{ apiMe.name }}</h3>
+                            </div>
+                        </li>
+                        <li class="clearfix" ng-hide="angular.isUndefined(apiMe.birthday)">
+                            <div class="user_info">
+                                <i class="fa fa-birthday-cake"></i>
+                                &nbsp;
+                                @{{ apiMe.birthday | date:'dd LLLL yyyy' }}
+                                <p>còn 500 ngày nữa tới sinh nhật bạn</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="cart_total">
+                        <a class="btn active" href="javascript:void(0);" ng-click="logout()">Đăng xuất</a>
+                    </div>
+                </div>
+            </div><!-- //USER LOGIN -->
 
             <!-- SEARCH FORM -->
             <div class="top_search_form">
@@ -40,39 +67,34 @@
                 </form>
             </div><!-- SEARCH FORM -->
 
+            {{--<!-- SHOPPING BAG -->--}}
+            {{--<div class="shopping_bag">--}}
+                {{--<a class="shopping_bag_btn" href="javascript:void(0);">--}}
+                    {{--<i class="fa fa-shopping-cart"></i>--}}
+                    {{--<p>shopping bag</p><span>2</span>--}}
+                {{--</a>--}}
+                {{--<div class="cart">--}}
+                    {{--<ul class="cart-items">--}}
+                        {{--<li class="clearfix">--}}
+                            {{--<img class="cart_item_product" src="/public/glammy/images/tovar/women/1.jpg" alt=""/>--}}
+                            {{--<a href="product-page.html" class="cart_item_title">popover sweatshirt in floral--}}
+                                {{--jacquard</a>--}}
+                            {{--<span class="cart_item_price">1 × $98.00</span>--}}
+                        {{--</li>--}}
+                        {{--<li class="clearfix">--}}
+                            {{--<img class="cart_item_product" src="/public/glammy/images/tovar/women/3.jpg" alt=""/>--}}
+                            {{--<a href="product-page.html" class="cart_item_title">japanese indigo denim jacket</a>--}}
+                            {{--<span class="cart_item_price">2 × $158.00</span>--}}
+                        {{--</li>--}}
+                    {{--</ul>--}}
+                    {{--<div class="cart_total">--}}
+                        {{--<div class="clearfix"><span class="cart_subtotal">bag subtotal: <b>$414</b></span></div>--}}
+                        {{--<a class="btn active" href="checkout.html">Checkout</a>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div><!-- //SHOPPING BAG -->--}}
 
-            <!-- SHOPPING BAG -->
-            <div class="shopping_bag">
-                <a class="shopping_bag_btn" href="javascript:void(0);">
-
-                    <i class="fa fa-shopping-cart"></i>
-                    <p>shopping bag</p><span>2</span>
-                </a>
-
-
-                <div class="cart">
-                    <ul class="cart-items">
-                        <li class="clearfix">
-                            <img class="cart_item_product" src="/public/glammy/images/tovar/women/1.jpg" alt=""/>
-                            <a href="product-page.html" class="cart_item_title">popover sweatshirt in floral
-                                jacquard</a>
-                            <span class="cart_item_price">1 × $98.00</span>
-                        </li>
-                        <li class="clearfix">
-                            <img class="cart_item_product" src="/public/glammy/images/tovar/women/3.jpg" alt=""/>
-                            <a href="product-page.html" class="cart_item_title">japanese indigo denim jacket</a>
-                            <span class="cart_item_price">2 × $158.00</span>
-                        </li>
-                    </ul>
-                    <div class="cart_total">
-                        <div class="clearfix"><span class="cart_subtotal">bag subtotal: <b>$414</b></span></div>
-                        <a class="btn active" href="checkout.html">Checkout</a>
-                    </div>
-                </div>
-            </div><!-- //SHOPPING BAG -->
-
-
-            <!-- LOVE LIST -->
+                    <!-- LOVE LIST -->
             <div class="love_list">
                 <a class="love_list_btn" href="javascript:void(0);"><i class="fa fa-heart-o"></i>
                     <p>Love list</p><span>0</span></a>

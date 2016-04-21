@@ -54,6 +54,19 @@ jQuery(document).ready(function() {
 
 
 
+/*-----------------------------------------------------------------------------------*/
+/*	USER LOGIN
+ /*-----------------------------------------------------------------------------------*/
+jQuery(document).ready(function() {
+	jQuery('.user_login .cart').slideUp(1);
+	jQuery('.user_login_btn').click(function(){
+		jQuery('.user_login .cart').slideToggle();
+		jQuery('.user_login .cart').parent().toggleClass('cart_active');
+	});
+});
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	SHOPPING BAG

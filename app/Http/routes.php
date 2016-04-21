@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', ['as' => 'homepage', function () {
     return view('layout.master');
-});
+}]);

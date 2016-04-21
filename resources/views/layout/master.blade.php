@@ -19,21 +19,22 @@
     <link href="/public/glammy/css/animate.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/public/glammy/css/style.css" rel="stylesheet" type="text/css"/>
 
+    <link href="/public/css/style.css" rel="stylesheet" type="text/css" />
+
     <!-- FONTS -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
           rel='stylesheet' type='text/css'>
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.css" rel="stylesheet">
 
-    <script src="/public/js/facebook.js"></script>
 </head>
-<body>
+<body ng-controller="MainCtrl">
 
 <!-- PRELOADER -->
 <div id="preloader"><img src="/public/glammy/images/preloader.gif" alt=""/></div>
 <!-- //PRELOADER -->
 <div class="preloader_hide">
     <!-- PAGE -->
-    <div id="page">
+    <div id="page" ng-click="clickLogin()">
 
         @include('layout.header')
 
@@ -55,6 +56,8 @@
 
 <script src="/public/components/angular/angular.min.js" type="text/javascript"></script>
 <script src="/public/components/angular-route/angular-route.min.js" type="text/javascript"></script>
+<script src="/public/components/angular-easyfb/build/angular-easyfb.min.js" type="text/javascript"></script>
+<script src="/public/components/angular-i18n/angular-locale_vi-vn.js" type="text/javascript"></script>
 <script src="/public/components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script src="/public/js/app.js"></script>
 
