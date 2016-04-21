@@ -14,3 +14,7 @@
 Route::get('/', ['as' => 'homepage', function () {
     return view('layout.master');
 }]);
+
+Route::get('/welcome', function() {
+    return view('welcome');
+});

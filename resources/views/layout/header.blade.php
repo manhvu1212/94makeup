@@ -47,7 +47,8 @@
                                 <i class="fa fa-birthday-cake"></i>
                                 &nbsp;
                                 @{{ apiMe.birthday | date:'dd LLLL yyyy' }}
-                                <p>còn 500 ngày nữa tới sinh nhật bạn</p>
+                                <p ng-hide="apiMe.dayDiff == 0">còn @{{ apiMe.dayDiff }} ngày nữa tới sinh nhật bạn</p>
+                                <p ng-show="apiMe.dayDiff == 0">Chúc bạn sinh nhật tuổi @{{ apiMe.age }} thật ý nghĩa và vui vẻ nhé</p>
                             </div>
                         </li>
                     </ul>

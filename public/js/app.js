@@ -27,7 +27,7 @@ APP.controller('MainCtrl', function ($scope, ezfb, $window, $location, $timeout)
         });
     };
 
-    $scope.clickLogin = function() {
+    $scope.clickLogin = function () {
         if (angular.isUndefined($scope.loginStatus) || $scope.loginStatus.status != 'connected') {
             $scope.login();
         }
@@ -58,7 +58,19 @@ APP.controller('MainCtrl', function ($scope, ezfb, $window, $location, $timeout)
     function updateApiMe() {
         ezfb.api('/me?fields=birthday,name', function (res) {
             $scope.apiMe = res;
-            $scope.apiMe['birthday'] = new Date($scope.apiMe['birthday']).getTime();
+            $scope.apiMe['birthday'] = new Date($scope.apiMe['birthday']);
+            var dateNow = new Date();
+            dateNow.setHours(0, 0, 0, 0);
+            var dateAnniversary = new Date(
+                $scope.apiMe['birthday'].getDate().toString() + '/' +
+                ($scope.apiMe['birthday'].getMonth() + 1).toString() + '/' +
+                dateNow.getFullYear().toString()
+            );
+            if(dateAnniversary < dateNow) {
+                dateAnniversary.setFullYear(dateAnniversary.getFullYear() + 1);
+            }
+            $scope.apiMe['dayDiff'] = Math.ceil((dateAnniversary - dateNow) / 1000 / 3600 / 24);
+            $scope.apiMe['age'] = dateNow.getFullYear() - $scope.apiMe['birthday'].getFullYear();
         });
         ezfb.api('/me/picture?height=320&width=320', function (res) {
             $scope.apiMe['avatar'] = res['data']['url'];

@@ -1,82 +1,93 @@
 /* __________ User Login __________ */
 .user_login {
-    float:right;
-    position:relative;
+    float: right;
+    position: relative;
     text-align: center;
 }
-.user_login .user_login_btn img {
-    height: 56px;
-    margin: 2px;
+
+.user_login .user_login_btn {
+    position: relative;
+    display: block;
+    margin: 0;
+    transition: none;
+    -webkit-transition: none;
 }
+
+.user_login .user_login_btn img {
+    height: 60px;
+    border-radius: 60px;
+}
+
 @media (max-width: 479px) {
     .user_login {
-        position:static;
+        position: static;
     }
 
     .user_login .user_login_btn img {
-        height: 44px;
-        margin: 1px;
+        height: 46px;
+        border-radius: 46px;
     }
 }
+
 .user_login.cart_active .user_login_btn {
-    margin:-2px 0 0;
-    border-top:2px solid #333;
+    margin: -2px 0 0;
+    border-top: 2px solid #333;
     background: #ffffff; /* Old browsers */
     background: -moz-linear-gradient(top, #f0f0f0 0%, #ffffff 90%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f0f0), color-stop(90%,#ffffff)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #f0f0f0 0%,#ffffff 90%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #f0f0f0 0%,#ffffff 90%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #f0f0f0 0%,#ffffff 90%); /* IE10+ */
-    background: linear-gradient(to bottom, #f0f0f0 0%,#ffffff 90%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f0f0f0), color-stop(90%, #ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f0f0f0 0%, #ffffff 90%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f0f0f0 0%, #ffffff 90%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f0f0f0 0%, #ffffff 90%); /* IE10+ */
+    background: linear-gradient(to bottom, #f0f0f0 0%, #ffffff 90%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0f0f0', endColorstr='#ffffff', GradientType=0); /* IE6-9 */
 }
 
 .user_login .user_login_btn:hover:before,
 .user_login .user_login_btn:hover:after {
-    content:'';
-    position:absolute;
-    left:-1px;
-    right:-1px;
-    top:-2px;
-    height:2px;
-    background-color:#333;
+    content: '';
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    top: -2px;
+    height: 2px;
+    background-color: #333;
 }
-.user_login .user_login_btn:hover:before {top:auto; bottom:-2px;}
-.user_login.cart_active .user_login_btn:before {
-    content:'';
-    position:absolute;
-    z-index:9999;
-    left:0;
-    right:0;
-    bottom:-2px;
-    height:3px;
-    background-color:#fff;
+
+.user_login .user_login_btn:hover:before {
+    top: auto;
+    bottom: -2px;
 }
+
 .user_login.cart_active .user_login_btn:before {
-    content:'';
-    position:absolute;
-    z-index:9999;
-    left:0;
-    right:0;
-    bottom:-2px;
-    height:3px;
-    background-color:#fff;
+    content: '';
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 3px;
+    background-color: #fff;
 }
 
 .user_login .user_login_btn p {
-    display:inline-block;
-    margin:0;
+    display: inline-block;
+    margin: 0;
 }
+
 .user_login .user_login_btn i {
-    padding-right:5px;
+    padding-right: 5px;
 }
+
 .user_login .user_login_btn span {
-    display:inline-block;
-    margin-left:5px;
-    padding:0 6px;
-    font-weight:900;
-    font-size:13px;
-    color:#fff;
-    background-color:#cc3333;
+    display: inline-block;
+    margin-left: 5px;
+    padding: 0 6px;
+    font-weight: 900;
+    font-size: 13px;
+    color: #fff;
+    background-color: #cc3333;
 }
-.user_login.cart_active .user_login_btn span {background-color:#333;}
+
+.user_login.cart_active .user_login_btn span {
+    background-color: #333;
+}

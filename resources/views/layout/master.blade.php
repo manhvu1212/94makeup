@@ -55,7 +55,7 @@
 <html class="ie" lang="en"> <![endif]-->
 
 <script src="/public/components/angular/angular.min.js" type="text/javascript"></script>
-<script src="/public/components/angular-route/angular-route.min.js" type="text/javascript"></script>
+{{--<script src="/public/components/angular-route/angular-route.min.js" type="text/javascript"></script>--}}
 <script src="/public/components/angular-easyfb/build/angular-easyfb.min.js" type="text/javascript"></script>
 <script src="/public/components/angular-i18n/angular-locale_vi-vn.js" type="text/javascript"></script>
 <script src="/public/components/jquery/dist/jquery.min.js" type="text/javascript"></script>
