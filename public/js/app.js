@@ -9,7 +9,7 @@ APP.config(function (ezfbProvider) {
     ezfbProvider.setLocale('vi_VN');
 });
 
-APP.controller('MainCtrl', function ($scope, ezfb, $window, $location, $timeout) {
+APP.controller('MainCtrl', function ($scope, ezfb, $window, $location, $timeout, $http) {
 
     updateLoginStatus(updateApiMe);
 
@@ -31,7 +31,7 @@ APP.controller('MainCtrl', function ($scope, ezfb, $window, $location, $timeout)
         if (angular.isUndefined($scope.loginStatus) || $scope.loginStatus.status != 'connected') {
             $scope.login();
         }
-    }
+    };
 
     var autoToJSON = ['loginStatus', 'apiMe'];
     angular.forEach(autoToJSON, function (varName) {
@@ -66,14 +66,17 @@ APP.controller('MainCtrl', function ($scope, ezfb, $window, $location, $timeout)
                 ($scope.apiMe['birthday'].getMonth() + 1).toString() + '/' +
                 dateNow.getFullYear().toString()
             );
-            if(dateAnniversary < dateNow) {
+            if (dateAnniversary < dateNow) {
                 dateAnniversary.setFullYear(dateAnniversary.getFullYear() + 1);
             }
             $scope.apiMe['dayDiff'] = Math.ceil((dateAnniversary - dateNow) / 1000 / 3600 / 24);
             $scope.apiMe['age'] = dateNow.getFullYear() - $scope.apiMe['birthday'].getFullYear();
-        });
-        ezfb.api('/me/picture?height=320&width=320', function (res) {
-            $scope.apiMe['avatar'] = res['data']['url'];
+
+            ezfb.api('/me/picture?height=320&width=320', function (res) {
+                if (!angular.isUndefined(res['data'])) {
+                    $scope.apiMe['avatar'] = res['data']['url'];
+                }
+            });
         });
     }
 });

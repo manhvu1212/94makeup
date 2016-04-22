@@ -35,21 +35,13 @@
         }
     </style>
 
-    <script>
-        var facebookAppId = '{!! env('FACEBOOK_APP_ID', '') !!}';
-        var facebookAppApi = '{!! env('FACEBOOK_APP_API', '') !!}';
-    </script>
-
 </head>
 <body>
 <div class="container">
     <div class="content">
         <div class="title">94 MAKEUP</div>
-        <button id="facebook-share">Share</button>
     </div>
 </div>
 </body>
 
-<script src="/public/components/jquery/dist/jquery.min.js"></script>
-<script src="/public/js/facebook.js"></script>
 </html>

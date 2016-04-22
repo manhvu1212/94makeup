@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', ['as' => 'homepage', function () {
-    return view('layout.master');
-}]);
+Route::group(['middleware' => 'web'], function() {
+    Route::get('/', ['as' => 'homepage', function () {
+        return view('content.home');
+    }]);
 
-Route::get('/welcome', function() {
-    return view('welcome');
+    Route::get('/welcome', function() {
+        return view('welcome');
+    });
+
+    Route::group(['as' => 'admin::', 'namespace' => 'Backend', 'prefix' => 'admin'], function () {
+        Route::get('/', ['as' => 'dashboard', 'uses' => 'AdminController@index']);
+    });
 });
+

@@ -38,8 +38,13 @@
 
         @include('layout.header')
 
+        @yield('content')
+
+        @include('layout.footer')
 
     </div>
+
+
 </div>
 
 <!-- TOVAR MODAL CONTENT -->
