@@ -20,7 +20,7 @@ Route::group(['middleware' => 'web'], function() {
         return view('welcome');
     });
 
-    Route::group(['as' => 'admin::', 'namespace' => 'Backend', 'prefix' => 'admin'], function () {
+    Route::group(['as' => 'admin::', 'namespace' => 'Backend', 'prefix' => 'admin', 'middleware' => 'facebook'], function () {
         Route::get('/', ['as' => 'dashboard', 'uses' => 'AdminController@index']);
     });
 });
