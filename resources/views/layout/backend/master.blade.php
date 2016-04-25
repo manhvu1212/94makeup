@@ -29,8 +29,8 @@
 
     <!-- Admin Style -->
     <link rel="stylesheet" href="/public/css/backend/style.css">
-
     @yield('style')
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini fixed">
@@ -41,7 +41,7 @@
 
     <!-- BEGIN SIDEBAR -->
     @include('layout.backend.sidebar')
-            <!-- BEGIN SIDEBAR -->
+            <!-- END SIDEBAR -->
 
     <!-- BEGIN CONTAINER -->
     <div class="content-wrapper">
@@ -56,7 +56,7 @@
                 <Vers>2.3.0</Vers>
             </b>
         </div>
-        <strong>Copyright &copy; 2016 <a href="#">Nguyen Manh Vu</a>.</strong>
+        <strong>Copyright &copy; 2016 <a href="#">94 MAKEUP</a>.</strong>
     </footer>
     <!-- END FOOTER -->
 </div>

@@ -60,9 +60,11 @@ class AdminController extends Controller
                 if(in_array("ADMINISTER", $page['perms'])) {
                     Session::put('userId', $me['id']);
                     Session::put('isRole', 'ADMINISTER');
+                    Session::put('userName', $me['name']);
                 }
             }
         }
+
         return redirect(route('admin::dashboard'));
     }
 }

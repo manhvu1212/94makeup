@@ -26,6 +26,11 @@
           rel='stylesheet' type='text/css'>
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.css" rel="stylesheet">
 
+    <script>
+        var appId = '{!! env('FACEBOOK_APP_ID') !!}';
+        var appVer = '{!! env('FACEBOOK_APP_API') !!}';
+    </script>
+
 </head>
 <body ng-controller="MainCtrl">
 
