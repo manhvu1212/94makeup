@@ -2,9 +2,9 @@
     <!-- Logo -->
     <a href="{!! route('admin::dashboard') !!}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini"><b>94</b>M</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><b>94</b> MAKEUP</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -223,18 +223,19 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="/public/components/adminlte-2.3.0/dist/img/user2-160x160.jpg" class="user-image"
+                        <img src="{!! Session::has('user.avatar') ? Session::get('user.avatar') : '/public/components/adminlte-2.3.0/dist/img/user2-160x160.jpg' !!}" class="user-image"
+
                              alt="User Image">
-                        <span class="hidden-xs">Nguyễn Mạnh Vũ</span>
+                        <span class="hidden-xs">{!! Session::get('user.name') !!}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="/public/components/adminlte-2.3.0/dist/img/user2-160x160.jpg" class="img-circle"
+                            <img src="{!! Session::has('user.avatar') ? Session::get('user.avatar') : '/public/components/adminlte-2.3.0/dist/img/user2-160x160.jpg' !!}" class="img-circle"
                                  alt="User Image">
                             <p>
-                                Nguyễn Mạnh Vũ
-                                <small>admin</small>
+                                {!! Session::get('user.name') !!}
+                                <small>{!! Session::get('user.role') !!}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -255,7 +256,7 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="" class="btn btn-default btn-flat">Logout</a>
+                                <a href="#" class="btn btn-default btn-flat">Logout</a>
                             </div>
                         </li>
                     </ul>

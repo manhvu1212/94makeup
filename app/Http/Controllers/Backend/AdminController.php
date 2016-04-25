@@ -16,8 +16,9 @@ class AdminController extends Controller
         return view('content.backend.dashboard');
     }
 
-    public function login() {
-        if (!Session::has('userId') || Session::get('isRole') != 'ADMINISTER') {
+    public function login()
+    {
+        if (!Session::has('user.id') || Session::get('user.role') != 'ADMINISTER') {
             $fb = new Facebook(Config::get('facebook'));
             $helper = $fb->getRedirectLoginHelper();
             return Redirect::to($helper->getLoginUrl(route('admin::loginCallback'), ['email', 'user_friends', 'user_birthday', 'manage_pages']));
@@ -54,13 +55,17 @@ class AdminController extends Controller
 
         $fb->setDefaultAccessToken($accessToken);
         $me = $fb->get('/me')->getDecodedBody();
+        $avatar = $fb->get('/me/picture?height=320&width=320&redirect=0')->getDecodedBody();
         $pages = $fb->get('/me/accounts?limit=100')->getDecodedBody();
         foreach ($pages['data'] as $page) {
-            if($page['id'] == env('FACEBOOK_PAGE_ID')) {
-                if(in_array("ADMINISTER", $page['perms'])) {
-                    Session::put('userId', $me['id']);
-                    Session::put('isRole', 'ADMINISTER');
-                    Session::put('userName', $me['name']);
+            if ($page['id'] == env('FACEBOOK_PAGE_ID')) {
+                if (in_array("ADMINISTER", $page['perms'])) {
+                    Session::put('user.id', $me['id']);
+                    Session::put('user.role', 'ADMINISTER');
+                    Session::put('user.name', $me['name']);
+                    if(isset($avatar['data'])) {
+                        Session::put('user.avatar', $avatar['data']['url']);
+                    }
                 }
             }
         }

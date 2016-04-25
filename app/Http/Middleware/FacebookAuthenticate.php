@@ -8,7 +8,7 @@ class FacebookAuthenticate
 {
     public function handle($request, Closure $next)
     {
-        if (!Session::has('userId') || Session::get('isRole') != 'ADMINISTER') {
+        if (!Session::has('user.id') || Session::get('user.role') != 'ADMINISTER') {
             return redirect('/');
         }
         return $next($request);
