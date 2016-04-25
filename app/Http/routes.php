@@ -11,17 +11,21 @@
 |
 */
 
-Route::group(['middleware' => 'web'], function() {
+Route::group(['middleware' => 'web'], function () {
     Route::get('/', ['as' => 'homepage', function () {
         return view('content.home');
     }]);
 
-    Route::get('/welcome', function() {
+    Route::get('/welcome', function () {
         return view('welcome');
     });
 
-    Route::group(['as' => 'admin::', 'namespace' => 'Backend', 'prefix' => 'admin', 'middleware' => 'facebook'], function () {
-        Route::get('/', ['as' => 'dashboard', 'uses' => 'AdminController@index']);
+    Route::group(['as' => 'admin::', 'namespace' => 'Backend', 'prefix' => 'admin'], function () {
+        Route::get('/', ['as' => 'login', 'uses' => 'AdminController@login']);
+        Route::get('/login/callback', ['as' => 'loginCallback', 'uses' => 'AdminController@loginCallback']);
+        Route::group(['middleware' => 'facebook'], function () {
+            Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@index']);
+        });
     });
 });
 
