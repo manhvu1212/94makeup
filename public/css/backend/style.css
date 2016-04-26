@@ -1,3 +1,32 @@
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small {
     text-transform: lowercase;
 }
+
+.dropzone {
+    border-style: dashed;
+    padding: 0;
+}
+
+.dropzone.dropzone.dz-clickable i {
+    cursor: pointer;
+    float: right;
+    padding: 5px;
+}
+
+.form-control-media {
+    width: auto;
+    display: initial;
+}
+
+.box-media {
+    padding: 7px;
+}
+
+.box-media .media-item {
+    position: relative;
+}
+
+.box-media .media-item .icheckbox_square-blue {
+    position: absolute;
+    background-color: rgba(60, 141, 188, 0.6);
+}

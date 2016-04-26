@@ -72,4 +72,9 @@ class AdminController extends Controller
 
         return redirect(route('admin::dashboard'));
     }
+
+    public function logout() {
+        Session::flush();
+        return redirect(route('homepage'));
+    }
 }

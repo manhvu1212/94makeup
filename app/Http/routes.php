@@ -23,6 +23,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['as' => 'admin::', 'namespace' => 'Backend', 'prefix' => 'admin'], function () {
         Route::get('/', ['as' => 'login', 'uses' => 'AdminController@login']);
         Route::get('/login/callback', ['as' => 'loginCallback', 'uses' => 'AdminController@loginCallback']);
+        Route::get('/logout', ['as' => 'logout', 'uses' => 'AdminController@logout']);
 
         Route::group(['middleware' => 'facebook'], function () {
             Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@index']);
@@ -53,6 +54,14 @@ Route::group(['middleware' => 'web'], function () {
 
                 Route::get('/category', ['as' => 'category', 'uses' => 'CategoryController@blog']);
 
+            });
+
+            Route::group(['as' => 'media::', 'prefix' => 'media'], function() {
+                Route::get('/', ['as' => 'index', 'uses' => 'MediaController@index']);
+                Route::post('/add', ['as' => 'add', 'uses' => 'MediaController@add']);
+                Route::post('/edit/{id}', ['as' => 'edit', 'uses' => 'MediaController@edit']);
+                Route::post('/save/{id?}', ['as' => 'save', 'uses' => 'MediaController@save']);
+                Route::post('/delete/{id}', ['as' => 'delete', 'uses' => 'MediaController@delete']);
             });
         });
     });

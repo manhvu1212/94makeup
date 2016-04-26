@@ -28,8 +28,10 @@
     <![endif]-->
 
     <!-- Admin Style -->
-    <link rel="stylesheet" href="/public/css/backend/style.css">
     @yield('style')
+
+    <link rel="stylesheet" href="/public/css/backend/style.css">
+
 
 </head>
 

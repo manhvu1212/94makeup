@@ -29,8 +29,14 @@
             <li class="header">MAIN NAVIGATION</li>
 
             <li class="{!! (Request::is('admin/dashboard')) ? 'active' : ''!!}">
-                <a href="">
+                <a href="{!! route('admin::dashboard') !!}">
                     <i class="fa fa-th"></i> <span>Bảng tin</span>
+                </a>
+            </li>
+
+            <li class="{!! (Request::is('admin/media')) ? 'active' : ''!!}">
+                <a href="{!! route('admin::media::index') !!}">
+                    <i class="fa fa-camera"></i></i> <span>Thư viện</span>
                 </a>
             </li>
 
