@@ -9,10 +9,17 @@ var MEDIA = {
 
     dropzoneInit: function () {
         Dropzone.options.formUploadMedia = {
-            paramName: "images",
+            paramName: "image",
             maxFilesize: 8,
+            addRemoveLinks: true,
             acceptedFiles: 'image/*',
-            dictFileTooBig: 'Dung lượng ảnh quá lớn ({{filesize}}Mb). Tối đa {{maxFilesize}}Mb.'
+            dictFileTooBig: 'Dung lượng ảnh quá lớn ({{filesize}}Mb). Tối đa {{maxFilesize}}Mb.',
+            dictRemoveFile: 'Hủy',
+            init: function () {
+                this.on("success", function (file) {
+                    this.removeFile(file);
+                });
+            }
         };
     }
 };

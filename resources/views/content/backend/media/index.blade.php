@@ -51,7 +51,7 @@
                         </form>
 
                         <div class="row">
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
@@ -60,7 +60,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
@@ -69,7 +69,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
@@ -78,7 +78,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
@@ -87,7 +87,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
@@ -96,7 +96,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
@@ -105,7 +105,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
@@ -114,7 +114,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 box-media">
+                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                 <div class="media-item">
                                     <input type="checkbox" name="check">
                                     <a href="#">
