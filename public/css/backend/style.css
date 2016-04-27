@@ -30,3 +30,13 @@
     position: absolute;
     background-color: rgba(60, 141, 188, 0.6);
 }
+
+.box-media-new .img-bordered-sm {
+    border-color: #3c8dbc;
+}
+
+@media (min-width: 1600px) {
+    .box-media {
+        width: calc(100% / 11);
+    }
+}

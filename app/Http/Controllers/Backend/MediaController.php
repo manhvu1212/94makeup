@@ -2,48 +2,70 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
+use App\Media;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
+use Jenssegers\Date\Date;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class MediaController extends Controller
 {
-    public function index()
+    public function index($year = null, $month = null)
     {
-        return view('content.backend.media.index');
+        $media = Media::all()->sortByDesc('created_at');
+
+        $filters = DB::table('media')
+            ->select(DB::raw('YEAR(created_at) as year'), DB::raw('MONTH(created_at) as month'), DB::raw('count(id) as count'))
+            ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('content.backend.media.index', ['media' => $media, 'filters' => $filters]);
     }
 
     public function add()
     {
         $input = Input::all();
         $rules = array(
-            'image' => 'image|max:8000',
+            'image' => 'image|max:9000',
         );
 
         $validation = Validator::make($input, $rules);
 
         if ($validation->fails()) {
-            return Response::make($validation->errors->first(), 400);
+            return Response::json('error', 400);
         }
 
-        $current = Carbon::now();
+        $current = Date::now();
         $year = $current->year;
         $month = $current->month;
         $day = $current->day;
 
         $file = Input::file('image');
         $destinationPath = 'uploads/' . $year . '/' . $month . '/' . $day;
-        $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '-' . $current->timestamp;
+        $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $fileUpload = $filename . '.' . $extension;
-        $newFile = $file->move($destinationPath, $fileUpload);
-        Image::make($newFile)->fit(300)->save($destinationPath . '/' . $filename . '-300x300.' . $extension);
+        $fileUpload = $filename . '-' . $current->timestamp . '.' . $extension;
+        $fileThumbnail = $filename . '-' . $current->timestamp . '-300x300.' . $extension;
+        try {
+            $newFile = $file->move($destinationPath, $fileUpload);
+            Image::make($newFile)->fit(300)->save($destinationPath . '/' . $fileThumbnail);
+        } catch (FileException $e) {
+            return Response::json('error', 400);
+        }
 
-        return Response::json(200);
+        $media = new Media();
+        $media->filename = $filename;
+        $media->full = '/public/' . $newFile;
+        $media->thumbnail = '/public/' . $destinationPath . '/' . $fileThumbnail;
+        $media->author = Session::get('user.id');
+        $media->save();
+
+        return Response::json(json_encode($media));
     }
 
     public function edit($id)

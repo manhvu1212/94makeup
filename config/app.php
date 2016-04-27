@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -157,6 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
     ],
 
     /*
@@ -204,6 +205,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Image' => Intervention\Image\Facades\Image::class,
+        'Date' => Jenssegers\Date\Date::class,
     ],
 
 ];

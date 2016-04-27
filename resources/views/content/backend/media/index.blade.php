@@ -26,17 +26,18 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <select class="form-control form-control-media">
+                        <select class="form-control form-control-media" onchange="if (this.value) window.location.href=this.value">
                             <option>Lọc theo tháng</option>
-                            <option>Tháng hai 2016</option>
-                            <option>Tháng ba 2016</option>
-                            <option>Tháng tư 2016</option>
-                            <option>Tháng năm 2016</option>
+                            @foreach($filters as $filter)
+                                <option value="{!! route('admin::media::index', [$filter->year, $filter->month]) !!}">
+                                    {!! Date::createFromDate($filter->year, $filter->month, null)->format('F Y') !!}
+                                </option>
+                            @endforeach
                         </select>
                         &nbsp;&nbsp;&nbsp;
                         <button type="button" onclick="MEDIA.openUploadMedia()" class="btn btn-danger">Thêm</button>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-default">Xóa ảnh đã chọn</button>
+                        <button type="button" onclick="MEDIA.deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn</button>
                     </div>
                     <div class="box-body">
 
@@ -50,79 +51,18 @@
                             </div>
                         </form>
 
-                        <div class="row">
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
+                        <div class="row" id="media">
+                            @foreach($media as $img)
+                                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
+                                    <div class="media-item">
+                                        <input type="checkbox" name="check" value="{!! $img['id'] !!}">
+                                        <a href="#">
+                                            <img src="{!! $img['thumbnail'] !!}" alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
+                                                 class="img-responsive img-bordered-sm">
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                <div class="media-item">
-                                    <input type="checkbox" name="check">
-                                    <a href="#">
-                                        <img src="/public/uploads/12292884_1520540574924516_477675486_n.jpg"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
