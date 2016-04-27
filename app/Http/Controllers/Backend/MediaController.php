@@ -80,7 +80,9 @@ class MediaController extends Controller
 
     public function delete($id)
     {
-
+        $media = Media::find($id);
+        $media->delete();
+        return Response::json('success', 200);
     }
 
 }

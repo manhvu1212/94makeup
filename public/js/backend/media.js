@@ -42,7 +42,15 @@ var MEDIA = {
     },
 
     deleteMultiple: function () {
-
+        $('input:checkbox:checked').each(function() {
+            $.ajax({
+                type: 'post',
+                url: '/admin/media/delete/' + $(this).val(),
+                success: function(res) {
+                    $(this).parents('.box-media').remove();
+                }
+            });
+        });
     }
 };
 

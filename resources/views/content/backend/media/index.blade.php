@@ -48,6 +48,8 @@
                                 <h3>Kéo thả các các file vào đây để tải lên.</h3>
                                 <h6>hoặc</h6>
                                 <button type="button" class="btn btn-default btn-lg">Chọn tệp tin</button>
+                                <br>
+                                <small>Kích thước tối đa 8Mb.</small>
                             </div>
                         </form>
 
