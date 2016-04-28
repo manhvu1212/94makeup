@@ -43,11 +43,16 @@ var MEDIA = {
 
     deleteMultiple: function () {
         $('input:checkbox:checked').each(function() {
+            var ele = $(this);
             $.ajax({
                 type: 'post',
                 url: '/admin/media/delete/' + $(this).val(),
+                dataType: 'json',
+                data: {
+                    _token: $('input[name=_token]').val()
+                },
                 success: function(res) {
-                    $(this).parents('.box-media').remove();
+                    ele.parents('.box-media').remove();
                 }
             });
         });
