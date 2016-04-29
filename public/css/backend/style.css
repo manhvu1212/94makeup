@@ -40,3 +40,13 @@
         width: calc(100% / 11);
     }
 }
+
+.jconfirm .content {
+    min-height: inherit;
+}
+
+.modal-media {
+    width: 95%;
+    margin: 30px auto;
+
+}

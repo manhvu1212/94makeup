@@ -32,7 +32,7 @@
                                 Lọc theo tháng
                             </option>
                             @foreach($filters as $filter)
-                                <option value="{!! route('admin::media::index', [$filter->year, $filter->month]) !!}" {!! (Request::is('admin/media/' . $filter->year . '/' . $filter->month)) ? 'selected' : ''!!}>
+                                <option value="{!! route('admin::media::filter', [$filter->year, $filter->month]) !!}" {!! (Request::is('admin/media/' . $filter->year . '/' . $filter->month)) ? 'selected' : ''!!}>
                                     {!! Date::createFromDate($filter->year, $filter->month, null)->format('F Y') !!}
                                 </option>
                             @endforeach
@@ -42,16 +42,14 @@
                         &nbsp;&nbsp;&nbsp;
                         <button type="button" onclick="MEDIA.deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn
                         </button>
-                        @if(!$media->isEmpty())
-                            <div class="checkbox form-control-media">
-                                <label>
-                                    <input type="checkbox" name="check-all" onchange="MEDIA.checkAll()"> Chọn tất cả
-                                </label>
-                            </div>
-                        @endif
+                        <div class="checkbox form-control-media">
+                            <label>
+                                <input type="checkbox" name="check-all"> Chọn tất cả
+                            </label>
+                        </div>
                     </div>
-                    <div class="box-body">
 
+                    <div class="box-body">
                         <form action="{!! route('admin::media::add') !!}" id="formUploadMedia" class="dropzone" hidden>
                             {!! csrf_field() !!}
                             <i class="fa fa-times" onclick="MEDIA.closeUploadMedia()"></i>
@@ -64,23 +62,14 @@
                             </div>
                         </form>
 
-                        <div class="row">
-                            <div class="col-sm-12">
-                                @if($media->isEmpty())
-                                    <p class="text-center">
-                                        <small>Không tìm thấy nội dung phù hợp.</small>
-                                    </p>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="row" id="media">
                             {!! csrf_field() !!}
                             @foreach($media as $img)
                                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                     <div class="media-item">
                                         <input type="checkbox" name="check" value="{!! $img['id'] !!}">
-                                        <a href="#">
+                                        <a href="javascript:void(0)"
+                                           onclick="MEDIA.edit('{!! route('admin::media::edit', $img['id']) !!}')">
                                             <img src="/public/{!! $img['thumbnail'] !!}"
                                                  alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
                                                  class="img-responsive img-bordered-sm">
@@ -89,11 +78,30 @@
                                 </div>
                             @endforeach
                         </div>
-
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
         </div>
     </section><!-- /.content -->
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="editMedia">
+        <div class="modal-dialog modal-media">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Chỉnh sửa chi ảnh chi tiết</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7" id="imgRender">
+
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 info-render" id="infoRender">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -10,6 +10,7 @@
     "angular-route": "^1.5.5",
     "angular-easyfb": "^1.4.4",
     "angular-i18n": "^1.5.5",
-    "dropzone": "^4.3.0"
+    "dropzone": "^4.3.0",
+    "jquery-confirm2": "craftpip/jquery-confirm#^2.5.1"
   }
 }

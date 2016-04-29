@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Media;
+use Facebook\Facebook;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
@@ -71,7 +73,10 @@ class MediaController extends Controller
 
     public function edit($id)
     {
-
+        $media = Media::find($id);
+        $author = $this->fb->get('/' . $media->author, $this->accessToken)->getDecodedBody();
+        $media->nameAuthor = $author['name'];
+        return Response::json(json_encode($media));
     }
 
     public function save($id = null)

@@ -42,27 +42,64 @@ var MEDIA = {
     },
 
     checkAll: function () {
-        alert(1);
+        $('input[name=check-all]').on('ifChecked', function () {
+            $('input[name=check]').iCheck('check');
+        });
+    },
+
+    unCheckAll: function () {
+        $('input[name=check-all]').on('ifUnchecked', function () {
+            $('input[name=check]').iCheck('uncheck');
+        });
     },
 
     deleteMultiple: function () {
-        $('input:checkbox:checked').each(function () {
-            var ele = $(this);
-            $.ajax({
-                type: 'post',
-                url: '/admin/media/delete/' + $(this).val(),
-                dataType: 'json',
-                data: {
-                    _token: $('input[name=_token]').val()
-                },
-                success: function (res) {
-                    ele.parents('.box-media').remove();
-                }
-            });
+        $.confirm({
+            title: 'Xác nhận!',
+            content: 'Xóa tất cả ảnh đã chọn?',
+            confirmButton: 'Xóa',
+            cancelButton: 'Không',
+            theme: 'material',
+            confirm: function () {
+                $('input[name=check]:checkbox:checked').each(function () {
+                    var ele = $(this);
+                    $.ajax({
+                        type: 'post',
+                        url: '/admin/media/delete/' + $(this).val(),
+                        dataType: 'json',
+                        data: {
+                            _token: $('input[name=_token]').val()
+                        },
+                        success: function (res) {
+                            ele.parents('.box-media').remove();
+                        }
+                    });
+                });
+            },
+            cancel: function () {
+
+            }
+        });
+    },
+
+    edit: function(url) {
+        $('#editMedia').modal('show');
+        $.ajax({
+            type: 'post',
+            url: url,
+            dataType: 'json',
+            data: {
+                _token: $('input[name=_token]').val()
+            },
+            success: function (res) {
+                console.log(res);
+            }
         });
     }
 };
 
 $(document).ready(function () {
     MEDIA.dropzoneInit();
+    MEDIA.checkAll();
+    MEDIA.unCheckAll();
 });
