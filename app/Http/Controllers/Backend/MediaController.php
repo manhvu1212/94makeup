@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Media;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -60,8 +61,8 @@ class MediaController extends Controller
 
         $media = new Media();
         $media->filename = $filename;
-        $media->full = '/public/' . $newFile;
-        $media->thumbnail = '/public/' . $destinationPath . '/' . $fileThumbnail;
+        $media->full = $newFile;
+        $media->thumbnail = $destinationPath . '/' . $fileThumbnail;
         $media->author = Session::get('user.id');
         $media->save();
 
@@ -81,6 +82,11 @@ class MediaController extends Controller
     public function delete($id)
     {
         $media = Media::find($id);
+        try {
+            File::delete($media->full, $media->thumbnail);
+        } catch(FileException $e) {
+            return Response::json('error', 400);
+        }
         $media->delete();
         return Response::json('success', 200);
     }

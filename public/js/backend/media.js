@@ -24,7 +24,7 @@ var MEDIA = {
                         .append($('<div class="media-item">')
                             .append($('<input type="checkbox" name="check" value="' + img.id + '">'))
                             .append($('<a href="#">')
-                                .append($('<img src="' + img.thumbnail + '" alt="' + img.title + '" class="img-responsive img-bordered-sm">'))
+                                .append($('<img src="/public/' + img.thumbnail + '" alt="' + img.title + '" class="img-responsive img-bordered-sm">'))
                             )
                         );
                     $('#media').prepend(ele);
@@ -41,8 +41,12 @@ var MEDIA = {
         };
     },
 
+    checkAll: function () {
+        alert(1);
+    },
+
     deleteMultiple: function () {
-        $('input:checkbox:checked').each(function() {
+        $('input:checkbox:checked').each(function () {
             var ele = $(this);
             $.ajax({
                 type: 'post',
@@ -51,7 +55,7 @@ var MEDIA = {
                 data: {
                     _token: $('input[name=_token]').val()
                 },
-                success: function(res) {
+                success: function (res) {
                     ele.parents('.box-media').remove();
                 }
             });

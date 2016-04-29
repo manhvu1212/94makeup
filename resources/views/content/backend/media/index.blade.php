@@ -26,10 +26,13 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <select class="form-control form-control-media" onchange="if (this.value) window.location.href=this.value">
-                            <option>Lọc theo tháng</option>
+                        <select class="form-control form-control-media"
+                                onchange="if (this.value) window.location.href=this.value">
+                            <option value="{!! route('admin::media::index') !!}" {!! (Request::is('admin/media')) ? 'selected' : ''!!}>
+                                Lọc theo tháng
+                            </option>
                             @foreach($filters as $filter)
-                                <option value="{!! route('admin::media::index', [$filter->year, $filter->month]) !!}">
+                                <option value="{!! route('admin::media::index', [$filter->year, $filter->month]) !!}" {!! (Request::is('admin/media/' . $filter->year . '/' . $filter->month)) ? 'selected' : ''!!}>
                                     {!! Date::createFromDate($filter->year, $filter->month, null)->format('F Y') !!}
                                 </option>
                             @endforeach
@@ -37,7 +40,15 @@
                         &nbsp;&nbsp;&nbsp;
                         <button type="button" onclick="MEDIA.openUploadMedia()" class="btn btn-danger">Thêm</button>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" onclick="MEDIA.deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn</button>
+                        <button type="button" onclick="MEDIA.deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn
+                        </button>
+                        @if(!$media->isEmpty())
+                            <div class="checkbox form-control-media">
+                                <label>
+                                    <input type="checkbox" name="check-all" onchange="MEDIA.checkAll()"> Chọn tất cả
+                                </label>
+                            </div>
+                        @endif
                     </div>
                     <div class="box-body">
 
@@ -55,13 +66,14 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> Chọn tất cả
-                                    </label>
-                                </div>
+                                @if($media->isEmpty())
+                                    <p class="text-center">
+                                        <small>Không tìm thấy nội dung phù hợp.</small>
+                                    </p>
+                                @endif
                             </div>
                         </div>
+
                         <div class="row" id="media">
                             {!! csrf_field() !!}
                             @foreach($media as $img)
@@ -69,13 +81,15 @@
                                     <div class="media-item">
                                         <input type="checkbox" name="check" value="{!! $img['id'] !!}">
                                         <a href="#">
-                                            <img src="{!! $img['thumbnail'] !!}" alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
+                                            <img src="/public/{!! $img['thumbnail'] !!}"
+                                                 alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
                                                  class="img-responsive img-bordered-sm">
                                         </a>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
+
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
