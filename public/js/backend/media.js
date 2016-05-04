@@ -23,8 +23,8 @@ var MEDIA = {
                     var ele = $('<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media box-media-new">')
                         .append($('<div class="media-item">')
                             .append($('<input type="checkbox" name="check" value="' + img.id + '">'))
-                            .append($('<a href="#">')
-                                .append($('<img src="/public/' + img.thumbnail + '" alt="' + img.title + '" class="img-responsive img-bordered-sm">'))
+                            .append($('<a href="javascript:void(0)" data-id="' + img.id + '">')
+                                .append($('<img src="/public/' + img.thumbnail + '" alt="' + img.filename + '" class="img-responsive img-bordered-sm">'))
                             )
                         );
                     $('#media').prepend(ele);
@@ -36,6 +36,7 @@ var MEDIA = {
                     setTimeout(function () {
                         ele.removeClass('box-media-new');
                     }, 8000);
+                    MEDIA.edit();
                 });
             }
         };
@@ -75,6 +76,7 @@ var MEDIA = {
                         }
                     });
                 });
+                $('input[name=check-all]').iCheck('uncheck');
             },
             cancel: function () {
 
@@ -82,24 +84,61 @@ var MEDIA = {
         });
     },
 
-    edit: function(url) {
-        $('#editMedia').modal('show');
-        $.ajax({
-            type: 'post',
-            url: url,
-            dataType: 'json',
-            data: {
-                _token: $('input[name=_token]').val()
-            },
-            success: function (res) {
-                console.log(res);
-            }
+    edit: function () {
+        $('.media-item a').on('click', function () {
+            $('#imgRender').empty();
+            $('#infoRender').empty();
+            var id = $(this).data('id');
+            var url = '/admin/media/edit/' + id;
+            $('#editMedia').modal('show');
+            $.ajax({
+                type: 'post',
+                url: url,
+                //dataType: 'json',
+                data: {
+                    _token: $('input[name=_token]').val()
+                },
+                success: function (res) {
+                    var img = jQuery.parseJSON(res);
+                    $('#imgRender').append($('<img src="/public/' + img.full + '" class="img-responsive">'));
+                    $('#infoRender').append($('<form class="form-horizontal" action="/admin/media/save/' + img.id + '" method="post">')
+                        .append($('<div class="box-body">')
+                            .append($('<div class="form-group">')
+                                .append($('<label class="col-sm-3 control-label">Tên file</label>'))
+                                .append($('<div class="col-sm-9">')
+                                    .append($('<input type="text" name="filename" value="' + img.filename + '" class="form-control">'))
+                                )
+                            )
+                            .append($('<div class="form-group">')
+                                .append($('<label class="col-sm-3 control-label">Văn bản thay thế</label>'))
+                                .append($('<div class="col-sm-9">')
+                                    .append($('<input type="text" name="alt" value="' + img.alt + '" class="form-control">'))
+                                )
+                            )
+                            .append($('<div class="form-group">')
+                                .append($('<label class="col-sm-3 control-label">Chú thích</label>'))
+                                .append($('<div class="col-sm-9">')
+                                    .append($('<textarea class="form-control" name="description" rows="3">'))
+                                )
+                            )
+                            .append($('<div class="form-group">')
+                                .append($('<label class="col-sm-3 control-label">Tải lên bởi</label>'))
+                                .append($('<div class="col-sm-9">')
+                                    .append($('<label class="control-label">' + img.nameAuthor + '</label>'))
+                                )
+                            )
+                            .append($('<button type="submit" class="btn btn-flat btn-warning pull-right">Save</button>'))
+                        )
+                    );
+                }
+            });
         });
-    }
+    },
 };
 
 $(document).ready(function () {
     MEDIA.dropzoneInit();
     MEDIA.checkAll();
     MEDIA.unCheckAll();
+    MEDIA.edit();
 });

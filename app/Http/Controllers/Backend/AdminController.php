@@ -51,20 +51,16 @@ class AdminController extends Controller
             return redirect('/')->with('message', $message);
         }
 
-//        if (!$accessToken->isLongLived()) {
-//            $client = $this->fb->getOAuth2Client();
-//            try {
-//                $accessToken = $client->getLongLivedAccessToken($accessToken);
-//                dd($accessToken->isLongLived());
-//            } catch(FacebookSDKException $e) {
-//                return redirect('/')->with('message', 'Facebook SDK returned an error: ' . $e->getMessage());
-//            }
-//        }
-
+        if (!$accessToken->isLongLived()) {
+            $client = $this->fb->getOAuth2Client();
+            try {
+                $accessToken = $client->getLongLivedAccessToken($accessToken);
+            } catch(FacebookSDKException $e) {
+                return redirect('/')->with('message', 'Facebook SDK returned an error: ' . $e->getMessage());
+            }
+        }
 
         $this->fb->setDefaultAccessToken($accessToken);
-        dd($accessToken->isLongLived());
-//        $this->accessToken = $accessToken->getValue();
         $me = $this->fb->get('/me')->getDecodedBody();
         $avatar = $this->fb->get('/me/picture?height=320&width=320&redirect=0')->getDecodedBody();
         $pages = $this->fb->get('/me/accounts?limit=100')->getDecodedBody();
@@ -74,13 +70,13 @@ class AdminController extends Controller
                     Session::put('user.id', $me['id']);
                     Session::put('user.role', 'ADMINISTER');
                     Session::put('user.name', $me['name']);
+                    Session::put('user.token', $accessToken);
                     if (isset($avatar['data'])) {
                         Session::put('user.avatar', $avatar['data']['url']);
                     }
                 }
             }
         }
-
         return redirect(route('admin::dashboard'));
     }
 

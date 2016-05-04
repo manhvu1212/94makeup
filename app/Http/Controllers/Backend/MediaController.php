@@ -3,8 +3,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Media;
-use Facebook\Facebook;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
@@ -49,6 +47,7 @@ class MediaController extends Controller
         $day = $current->day;
 
         $file = Input::file('image');
+        $orientation = exif_read_data($file)['Orientation'];
         $destinationPath = 'uploads/' . $year . '/' . $month . '/' . $day;
         $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -56,17 +55,34 @@ class MediaController extends Controller
         $fileThumbnail = $filename . '-' . $current->timestamp . '-300x300.' . $extension;
         try {
             $newFile = $file->move($destinationPath, $fileUpload);
-            Image::make($newFile)->fit(300)->save($destinationPath . '/' . $fileThumbnail);
+            $newFile = Image::make($newFile);
+            switch ($orientation) {
+                case 3:
+                case 4:
+                    $newFile->rotate(180);
+                    break;
+                case 5:
+                case 6:
+                    $newFile->rotate(-90);
+                    break;
+                case 7:
+                case 8:
+                    $newFile->rotate(90);
+                    break;
+            }
+            $newFile->save($destinationPath . '/' . $fileUpload);
+            $newFile->fit(300)->save($destinationPath . '/' . $fileThumbnail);
         } catch (FileException $e) {
             return Response::json('error', 400);
         }
 
         $media = new Media();
         $media->filename = $filename;
-        $media->full = $newFile;
+        $media->full = $destinationPath . '/' . $fileUpload;
         $media->thumbnail = $destinationPath . '/' . $fileThumbnail;
         $media->author = Session::get('user.id');
         $media->save();
+        $media->url = route('admin::media::edit', $media->id);
 
         return Response::json(json_encode($media));
     }
@@ -74,7 +90,7 @@ class MediaController extends Controller
     public function edit($id)
     {
         $media = Media::find($id);
-        $author = $this->fb->get('/' . $media->author, $this->accessToken)->getDecodedBody();
+        $author = $this->fb->get('/' . $media->author, Session::get('user.token'))->getDecodedBody();
         $media->nameAuthor = $author['name'];
         return Response::json(json_encode($media));
     }
@@ -89,7 +105,7 @@ class MediaController extends Controller
         $media = Media::find($id);
         try {
             File::delete($media->full, $media->thumbnail);
-        } catch(FileException $e) {
+        } catch (FileException $e) {
             return Response::json('error', 400);
         }
         $media->delete();

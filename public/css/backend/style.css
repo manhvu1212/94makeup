@@ -45,8 +45,32 @@
     min-height: inherit;
 }
 
+.modal {
+    padding-right: 0px !important;
+}
+
 .modal-media {
     width: 95%;
     margin: 30px auto;
+}
 
+.modal-media .modal-body {
+    background-color: #f3f3f3;
+    padding: 0 15px;
+}
+
+.modal-media .modal-body .img-render {
+    background-color: #ffffff;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.modal-media .modal-body .img-render img {
+    margin: auto;
+    max-height: calc(100vh - 146px);
+}
+
+.modal-media .modal-body .info-render {
+    padding-bottom: 15px;
+    padding-top: 15px;
 }

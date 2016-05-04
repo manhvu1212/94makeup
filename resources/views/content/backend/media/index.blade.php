@@ -68,8 +68,7 @@
                                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                     <div class="media-item">
                                         <input type="checkbox" name="check" value="{!! $img['id'] !!}">
-                                        <a href="javascript:void(0)"
-                                           onclick="MEDIA.edit('{!! route('admin::media::edit', $img['id']) !!}')">
+                                        <a href="javascript:void(0)" data-id="{!! $img['id'] !!}">
                                             <img src="/public/{!! $img['thumbnail'] !!}"
                                                  alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
                                                  class="img-responsive img-bordered-sm">
@@ -84,20 +83,50 @@
         </div>
     </section><!-- /.content -->
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="editMedia">
+    <div class="modal fade" tabindex="-1" id="editMedia">
         <div class="modal-dialog modal-media">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Chỉnh sửa chi ảnh chi tiết</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Chỉnh sửa ảnh chi tiết</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7" id="imgRender">
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 img-render" id="imgRender">
 
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 info-render" id="infoRender">
-
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 info-render" id="infoRender">
+                            {{--<form action="#" method="post" class="form-horizontal">--}}
+                                {{--<div class="box-body">--}}
+                                    {{--<div class="form-group">--}}
+                                        {{--<label class="col-sm-3 control-label">Tên file</label>--}}
+                                        {{--<div class="col-sm-9">--}}
+                                            {{--<input type="text" class="form-control" name="filename">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="form-group">--}}
+                                        {{--<label class="col-sm-3 control-label">Văn bản thay thế</label>--}}
+                                        {{--<div class="col-sm-9">--}}
+                                            {{--<input type="text" class="form-control" name="alt">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="form-group">--}}
+                                        {{--<label class="col-sm-3 control-label">Chú thích</label>--}}
+                                        {{--<div class="col-sm-9">--}}
+                                            {{--<textarea class="form-control" name="description" rows="3"></textarea>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="form-group">--}}
+                                        {{--<label class="col-sm-3 control-label">Tải lên bởi</label>--}}
+                                        {{--<div class="col-sm-9">--}}
+                                            {{--<label class="control-label">Vũ</label>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<button type="submit" class="btn btn-flat btn-warning pull-right">Save</button>--}}
+                                {{--</div>--}}
+                                {{--<!-- /.box-body -->--}}
+                            {{--</form>--}}
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,6 @@ class Controller extends BaseController
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
 
     protected $fb;
-    protected $accessToken;
 
     public function __construct()
     {
