@@ -36,7 +36,9 @@ var MEDIA = {
                     setTimeout(function () {
                         ele.removeClass('box-media-new');
                     }, 8000);
-                    MEDIA.edit();
+                    ele.find('a').bind('click', function () {
+                        MEDIA.edit(img.id);
+                    });
                 });
             }
         };
@@ -84,53 +86,50 @@ var MEDIA = {
         });
     },
 
-    edit: function () {
-        $('.media-item a').on('click', function () {
-            $('#imgRender').empty();
-            $('#infoRender').empty();
-            var id = $(this).data('id');
-            var url = '/admin/media/edit/' + id;
-            $('#editMedia').modal('show');
-            $.ajax({
-                type: 'post',
-                url: url,
-                data: {
-                    _token: $('input[name=_token]').val()
-                },
-                success: function (img) {
-                    $('#imgRender').append($('<img src="/public/' + img.full + '" class="img-responsive">'));
-                    $('#infoRender').parents('form').attr('action', "/admin/media/save/" + img.id);
-                    $('#infoRender').append($('<div class="box-body">')
-                        .append($('<div class="form-group">')
-                            .append($('<label class="col-sm-3 control-label">Tên file</label>'))
-                            .append($('<div class="col-sm-9">')
-                                .append($('<input type="text" name="filename" value="' + img.filename + '" class="form-control">'))
+    edit: function (id) {
+        $('#imgRender').empty();
+        $('#infoRender').empty();
+        var url = '/admin/media/edit/' + id;
+        $('#editMedia').modal('show');
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {
+                _token: $('input[name=_token]').val()
+            },
+            success: function (img) {
+                $('#imgRender').append($('<img src="/public/' + img.full + '" class="img-responsive">'));
+                $('#infoRender').parents('form').attr('action', "/admin/media/save/" + img.id);
+                $('#infoRender').append($('<div class="box-body">')
+                    .append($('<div class="form-group">')
+                        .append($('<label class="col-sm-3 control-label">Tên file</label>'))
+                        .append($('<div class="col-sm-9">')
+                            .append($('<input type="text" name="filename" value="' + img.filename + '" class="form-control">'))
+                        )
+                    )
+                    .append($('<div class="form-group">')
+                        .append($('<label class="col-sm-3 control-label">Văn bản thay thế</label>'))
+                        .append($('<div class="col-sm-9">')
+                            .append($('<input type="text" name="alt" value="' + (img.alt == null ? "" : img.alt) + '" class="form-control">'))
+                        )
+                    )
+                    .append($('<div class="form-group">')
+                        .append($('<label class="col-sm-3 control-label">Chú thích</label>'))
+                        .append($('<div class="col-sm-9">')
+                            .append($('<textarea class="form-control" name="description" rows="3" maxlength="255">')
+                                .val((img.description == null ? "" : img.description))
                             )
                         )
-                        .append($('<div class="form-group">')
-                            .append($('<label class="col-sm-3 control-label">Văn bản thay thế</label>'))
-                            .append($('<div class="col-sm-9">')
-                                .append($('<input type="text" name="alt" value="' + (img.alt == null ? "" : img.alt) + '" class="form-control">'))
-                            )
+                    )
+                    .append($('<div class="form-group">')
+                        .append($('<label class="col-sm-3 control-label">Tải lên bởi</label>'))
+                        .append($('<div class="col-sm-9">')
+                            .append($('<label class="control-label">' + img.nameAuthor + '</label>'))
                         )
-                        .append($('<div class="form-group">')
-                            .append($('<label class="col-sm-3 control-label">Chú thích</label>'))
-                            .append($('<div class="col-sm-9">')
-                                .append($('<textarea class="form-control" name="description" rows="3">')
-                                    .val((img.description == null ? "" : img.description))
-                                )
-                            )
-                        )
-                        .append($('<div class="form-group">')
-                            .append($('<label class="col-sm-3 control-label">Tải lên bởi</label>'))
-                            .append($('<div class="col-sm-9">')
-                                .append($('<label class="control-label">' + img.nameAuthor + '</label>'))
-                            )
-                        )
-                        .append($('<button type="submit" class="btn btn-flat btn-warning pull-right">Save</button>'))
-                    );
-                }
-            });
+                    )
+                    .append($('<button type="submit" class="btn btn-flat btn-warning pull-right">Save</button>'))
+                );
+            }
         });
     },
 };
@@ -139,5 +138,7 @@ $(document).ready(function () {
     MEDIA.dropzoneInit();
     MEDIA.checkAll();
     MEDIA.unCheckAll();
-    MEDIA.edit();
+    $('.media-item a').bind('click', function () {
+        MEDIA.edit($(this).data('id'));
+    });
 });

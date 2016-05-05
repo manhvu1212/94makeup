@@ -17,7 +17,7 @@ class MediaController extends Controller
 {
     public function index($year = null, $month = null)
     {
-        $media = Media::all()->sortByDesc('created_at');
+        $media = new Media();
 
         $filters = DB::table('media')
             ->select(DB::raw('YEAR(created_at) as year'), DB::raw('MONTH(created_at) as month'), DB::raw('count(id) as count'))
@@ -25,7 +25,7 @@ class MediaController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('content.backend.media.index', ['media' => $media, 'filters' => $filters]);
+        return view('content.backend.media.index', ['media' => $media->getMedia(1, $year, $month), 'filters' => $filters]);
     }
 
     public function add()
@@ -47,7 +47,11 @@ class MediaController extends Controller
         $day = $current->day;
 
         $file = Input::file('image');
-        $orientation = exif_read_data($file)['Orientation'];
+        try{
+            $orientation = exif_read_data($file)['Orientation'];
+        } catch (\Exception $e) {
+            $orientation = 0;
+        }
         $destinationPath = 'uploads/' . $year . '/' . $month . '/' . $day;
         $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
