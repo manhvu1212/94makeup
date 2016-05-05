@@ -94,41 +94,40 @@ var MEDIA = {
             $.ajax({
                 type: 'post',
                 url: url,
-                //dataType: 'json',
                 data: {
                     _token: $('input[name=_token]').val()
                 },
-                success: function (res) {
-                    var img = jQuery.parseJSON(res);
+                success: function (img) {
                     $('#imgRender').append($('<img src="/public/' + img.full + '" class="img-responsive">'));
-                    $('#infoRender').append($('<form class="form-horizontal" action="/admin/media/save/' + img.id + '" method="post">')
-                        .append($('<div class="box-body">')
-                            .append($('<div class="form-group">')
-                                .append($('<label class="col-sm-3 control-label">Tên file</label>'))
-                                .append($('<div class="col-sm-9">')
-                                    .append($('<input type="text" name="filename" value="' + img.filename + '" class="form-control">'))
-                                )
+                    $('#infoRender').parents('form').attr('action', "/admin/media/save/" + img.id);
+                    $('#infoRender').append($('<div class="box-body">')
+                        .append($('<div class="form-group">')
+                            .append($('<label class="col-sm-3 control-label">Tên file</label>'))
+                            .append($('<div class="col-sm-9">')
+                                .append($('<input type="text" name="filename" value="' + img.filename + '" class="form-control">'))
                             )
-                            .append($('<div class="form-group">')
-                                .append($('<label class="col-sm-3 control-label">Văn bản thay thế</label>'))
-                                .append($('<div class="col-sm-9">')
-                                    .append($('<input type="text" name="alt" value="' + img.alt + '" class="form-control">'))
-                                )
-                            )
-                            .append($('<div class="form-group">')
-                                .append($('<label class="col-sm-3 control-label">Chú thích</label>'))
-                                .append($('<div class="col-sm-9">')
-                                    .append($('<textarea class="form-control" name="description" rows="3">'))
-                                )
-                            )
-                            .append($('<div class="form-group">')
-                                .append($('<label class="col-sm-3 control-label">Tải lên bởi</label>'))
-                                .append($('<div class="col-sm-9">')
-                                    .append($('<label class="control-label">' + img.nameAuthor + '</label>'))
-                                )
-                            )
-                            .append($('<button type="submit" class="btn btn-flat btn-warning pull-right">Save</button>'))
                         )
+                        .append($('<div class="form-group">')
+                            .append($('<label class="col-sm-3 control-label">Văn bản thay thế</label>'))
+                            .append($('<div class="col-sm-9">')
+                                .append($('<input type="text" name="alt" value="' + (img.alt == null ? "" : img.alt) + '" class="form-control">'))
+                            )
+                        )
+                        .append($('<div class="form-group">')
+                            .append($('<label class="col-sm-3 control-label">Chú thích</label>'))
+                            .append($('<div class="col-sm-9">')
+                                .append($('<textarea class="form-control" name="description" rows="3">')
+                                    .val((img.description == null ? "" : img.description))
+                                )
+                            )
+                        )
+                        .append($('<div class="form-group">')
+                            .append($('<label class="col-sm-3 control-label">Tải lên bởi</label>'))
+                            .append($('<div class="col-sm-9">')
+                                .append($('<label class="control-label">' + img.nameAuthor + '</label>'))
+                            )
+                        )
+                        .append($('<button type="submit" class="btn btn-flat btn-warning pull-right">Save</button>'))
                     );
                 }
             });

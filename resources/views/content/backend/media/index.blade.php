@@ -94,39 +94,13 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 img-render" id="imgRender">
-
+                            //
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 info-render" id="infoRender">
-                            {{--<form action="#" method="post" class="form-horizontal">--}}
-                                {{--<div class="box-body">--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label class="col-sm-3 control-label">Tên file</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<input type="text" class="form-control" name="filename">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label class="col-sm-3 control-label">Văn bản thay thế</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<input type="text" class="form-control" name="alt">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label class="col-sm-3 control-label">Chú thích</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<textarea class="form-control" name="description" rows="3"></textarea>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label class="col-sm-3 control-label">Tải lên bởi</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<label class="control-label">Vũ</label>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<button type="submit" class="btn btn-flat btn-warning pull-right">Save</button>--}}
-                                {{--</div>--}}
-                                {{--<!-- /.box-body -->--}}
-                            {{--</form>--}}
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 info-render">
+                            <form class="form-horizontal" action="" method="post">
+                                {!! csrf_field() !!}
+                                <div id="infoRender"></div>
+                            </form>
                         </div>
                     </div>
                 </div>

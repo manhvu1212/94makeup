@@ -52,10 +52,11 @@ class MediaController extends Controller
         $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
         $fileUpload = $filename . '-' . $current->timestamp . '.' . $extension;
+        $fileCrop = $filename . '-' . $current->timestamp . '-crop' . '.' . $extension;
         $fileThumbnail = $filename . '-' . $current->timestamp . '-300x300.' . $extension;
         try {
             $newFile = $file->move($destinationPath, $fileUpload);
-            $newFile = Image::make($newFile);
+            $newFile = $newFileThumbnail = Image::make($newFile);
             switch ($orientation) {
                 case 3:
                 case 4:
@@ -71,7 +72,10 @@ class MediaController extends Controller
                     break;
             }
             $newFile->save($destinationPath . '/' . $fileUpload);
-            $newFile->fit(300)->save($destinationPath . '/' . $fileThumbnail);
+            $newFile->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $fileCrop);
+            $newFileThumbnail->fit(300)->save($destinationPath . '/' . $fileThumbnail);
         } catch (FileException $e) {
             return Response::json('error', 400);
         }
@@ -79,6 +83,7 @@ class MediaController extends Controller
         $media = new Media();
         $media->filename = $filename;
         $media->full = $destinationPath . '/' . $fileUpload;
+        $media->crop = $destinationPath . '/' . $fileCrop;
         $media->thumbnail = $destinationPath . '/' . $fileThumbnail;
         $media->author = Session::get('user.id');
         $media->save();
@@ -92,19 +97,19 @@ class MediaController extends Controller
         $media = Media::find($id);
         $author = $this->fb->get('/' . $media->author, Session::get('user.token'))->getDecodedBody();
         $media->nameAuthor = $author['name'];
-        return Response::json(json_encode($media));
+        return $media;
     }
 
-    public function save($id = null)
+    public function save($id)
     {
-
+        return 1;
     }
 
     public function delete($id)
     {
         $media = Media::find($id);
         try {
-            File::delete($media->full, $media->thumbnail);
+            File::delete($media->full, $media->crop, $media->thumbnail);
         } catch (FileException $e) {
             return Response::json('error', 400);
         }
