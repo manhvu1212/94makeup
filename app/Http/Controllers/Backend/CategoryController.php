@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Backend;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -27,6 +28,8 @@ class CategoryController extends Controller
 
     public function blog()
     {
-        return view('content.backend.blog.category');
+        $category = new Category();
+        $categories = $category->where('type', 'blog')->get();
+        return view('content.backend.blog.category', ['categories' => $categories]);
     }
 }

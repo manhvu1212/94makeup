@@ -17,15 +17,29 @@ class MediaController extends Controller
 {
     public function index($year = null, $month = null)
     {
-        $media = new Media();
-
         $filters = DB::table('media')
             ->select(DB::raw('YEAR(created_at) as year'), DB::raw('MONTH(created_at) as month'), DB::raw('count(id) as count'))
             ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('content.backend.media.index', ['media' => $media->getMedia(1, $year, $month), 'filters' => $filters]);
+        return view('content.backend.media.index', ['media' => $this->getMedia(), 'filters' => $filters, 'year' => $year, 'month' => $month]);
+    }
+
+    public function getMedia($paging = 1, $year = null, $month = null)
+    {
+        $media = new Media();
+        if ($year != null && $month != null) {
+            return $media->orderBy('created_at', 'desc')
+                ->whereYear('created_at', '=', $year)
+                ->whereMonth('created_at', '=', $month)
+                ->forPage($paging, env('PAGING_MEDIA'))
+                ->get();
+        } else {
+            return $media->orderBy('created_at', 'desc')
+                ->forPage($paging, env('PAGING_MEDIA'))
+                ->get();
+        }
     }
 
     public function add()
@@ -47,7 +61,7 @@ class MediaController extends Controller
         $day = $current->day;
 
         $file = Input::file('image');
-        try{
+        try {
             $orientation = exif_read_data($file)['Orientation'];
         } catch (\Exception $e) {
             $orientation = 0;
@@ -57,7 +71,7 @@ class MediaController extends Controller
         $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
         $fileUpload = $filename . '-' . $current->timestamp . '.' . $extension;
         $fileCrop = $filename . '-' . $current->timestamp . '-crop' . '.' . $extension;
-        $fileThumbnail = $filename . '-' . $current->timestamp . '-300x300.' . $extension;
+        $fileThumbnail = $filename . '-' . $current->timestamp . '-thumbnail.' . $extension;
         try {
             $newFile = $file->move($destinationPath, $fileUpload);
             $newFile = $newFileThumbnail = Image::make($newFile);
@@ -76,7 +90,7 @@ class MediaController extends Controller
                     break;
             }
             $newFile->save($destinationPath . '/' . $fileUpload);
-            $newFile->resize(300, null, function ($constraint) {
+            $newFile->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath . '/' . $fileCrop);
             $newFileThumbnail->fit(300)->save($destinationPath . '/' . $fileThumbnail);
@@ -93,7 +107,7 @@ class MediaController extends Controller
         $media->save();
         $media->url = route('admin::media::edit', $media->id);
 
-        return Response::json(json_encode($media));
+        return $media;
     }
 
     public function edit($id)

@@ -60,16 +60,15 @@
                             <div class="form-group">
                                 <label>Cha</label>
                                 <select class="form-control">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                    <option>Trống</option>
+                                    @foreach($categories as $category)
+                                        <option value="{!! $category['id'] !!}">{!! $category['name'] !!}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Ảnh đại diện</label>
-                                <button type="button" class="btn btn-flat btn-block">Chọn ảnh</button>
+                                <button type="button" class="btn btn-flat btn-block" onclick="ADMIN.selectMedia()">Chọn ảnh</button>
                             </div>
                             <div class="form-group">
                                 <label>Mô tả</label>

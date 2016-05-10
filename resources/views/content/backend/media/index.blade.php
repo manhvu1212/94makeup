@@ -1,11 +1,11 @@
 @extends('layout.backend.master')
 
 @section('style')
-    <link href="/public/components/dropzone/dist/dropzone.css" rel="stylesheet">
+
 @endsection
 
 @section('script')
-    <script src="/public/components/dropzone/dist/dropzone.js" type="text/javascript"></script>
+
     <script src="/public/js/backend/media.js" type="text/javascript"></script>
 @endsection
 
@@ -62,8 +62,7 @@
                             </div>
                         </form>
 
-                        <div class="row" id="media">
-                            {!! csrf_field() !!}
+                        <div class="row" id="box-media">
                             @foreach($media as $img)
                                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
                                     <div class="media-item">
@@ -77,6 +76,9 @@
                                 </div>
                             @endforeach
                         </div>
+                        @if(!empty($media))
+                            <div class="load-more" data-paging="2" data-year="{!! $year !!}" data-month="{!! $month !!}"></div>
+                        @endif
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -98,7 +100,6 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 info-render">
                             <form class="form-horizontal" action="" method="post">
-                                {!! csrf_field() !!}
                                 <div id="infoRender"></div>
                             </form>
                         </div>

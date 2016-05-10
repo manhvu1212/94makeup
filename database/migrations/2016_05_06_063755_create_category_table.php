@@ -18,7 +18,7 @@ class CreateCategoryTable extends Migration
             $table->string('name');
             $table->integer('parent')->unsigned()->nullable();
             $table->enum('type', ['item', 'blog']);
-            $table->integer('image')->unsigned();
+            $table->integer('image')->unsigned()->nullable();
             $table->text('description')->nullable();
             $table->bigInteger('author');
             $table->timestamps();

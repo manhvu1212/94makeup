@@ -42,7 +42,7 @@
 
 @media (min-width: 1600px) {
     .box-media {
-        width: calc(100% / 11);
+        width: calc(100% / 9);
     }
 }
 

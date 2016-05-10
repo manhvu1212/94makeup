@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/public/components/adminlte-2.3.0/dist/css/skins/_all-skins.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="/public/components/adminlte-2.3.0/plugins/iCheck/square/blue.css">
+    <!-- Dropzone -->
+    <link href="/public/components/dropzone/dist/dropzone.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,6 +40,9 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini fixed">
+
+{!! csrf_field() !!}
+
 <div class="wrapper">
     <!-- BEGIN HEADER -->
     @include('layout.backend.header')
@@ -65,6 +70,9 @@
     <!-- END FOOTER -->
 </div>
 
+<!-- POPUP MEDIA -->
+@include('layout.backend.media')
+<!-- END POPUP MEDIA -->
 
 <!-- jQuery 2.1.4 -->
 <script src="/public/components/adminlte-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -82,6 +90,8 @@
 <script src="/public/components/adminlte-2.3.0/plugins/fastclick/fastclick.min.js"></script>
 <!-- iCheck -->
 <script src="/public/components/adminlte-2.3.0/plugins/iCheck/icheck.min.js"></script>
+<!-- Dropzone -->
+<script src="/public/components/dropzone/dist/dropzone.js" type="text/javascript"></script>
 <!-- jQuery Confirm 2 -->
 <script src="/public/components/jquery-confirm2/dist/jquery-confirm.min.js"></script>
 <!-- AdminLTE App -->
