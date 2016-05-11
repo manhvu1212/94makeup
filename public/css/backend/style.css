@@ -18,6 +18,14 @@
     display: initial;
 }
 
+.load-more {
+    background: transparent;
+}
+
+.load-more img {
+    display: none;
+}
+
 .box-media {
     padding: 7px;
 }

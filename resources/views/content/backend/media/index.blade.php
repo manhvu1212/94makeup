@@ -77,7 +77,14 @@
                             @endforeach
                         </div>
                         @if(!empty($media))
-                            <div class="load-more" data-paging="2" data-year="{!! $year !!}" data-month="{!! $month !!}"></div>
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <button class="btn btn-flat load-more" onclick="MEDIA.loadMoreMedia()" data-paging="2" data-year="{!! $year !!}" data-month="{!! $month !!}">
+                                        <i class="fa fa-arrow-down"></i>
+                                        <img src="/public/glammy/images/circle-loading.gif" class="img-responsive">
+                                    </button>
+                                </div>
+                            </div>
                         @endif
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
