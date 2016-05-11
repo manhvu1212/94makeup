@@ -76,7 +76,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        @if(!empty($media))
+                        @if(!$media->isEmpty()))
                             <div class="row">
                                 <div class="col-xs-12 text-center">
                                     <button class="btn btn-flat load-more" onclick="MEDIA.loadMoreMedia()" data-paging="2" data-year="{!! $year !!}" data-month="{!! $month !!}">
