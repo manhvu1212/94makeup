@@ -6,7 +6,7 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation">
-                                <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab">Tải ảnh lên</a>
+                                <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab">Tải lên</a>
                             </li>
                             <li role="presentation" class="active">
                                 <a href="#select" aria-controls="select" role="tab" data-toggle="tab">Thư viện</a>
@@ -15,7 +15,7 @@
 
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="upload">
-                                <form dropzone="uploadImage" class="dropzone">
+                                <form dropzone="uploadImagePopup" class="dropzone">
                                     {!! csrf_field() !!}
                                     <div class="dz-message needsclick">
                                         <h3>Kéo thả các các file vào đây để tải lên.</h3>
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="select">
-                                <div when-scroll-ends="loadMoreMedia()" class="row show-media">
+                                <div when-element-scroll-ends="loadMoreMedia()" class="row show-media">
                                     <div ng-repeat="img in media"
                                          class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">
                                         <a href="javascript:void(0)" ng-click="selectImage(img)">

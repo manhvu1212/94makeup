@@ -21,7 +21,7 @@
         </ol>
     </section>
 
-    <section class="content">
+    <section ng-controller="MediaCtrl" class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
@@ -38,7 +38,7 @@
                             @endforeach
                         </select>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" onclick="MEDIA.openUploadMedia()" class="btn btn-danger">Thêm</button>
+                        <button type="button" ng-click="showDropzone = !showDropzone" class="btn btn-danger">Thêm</button>
                         &nbsp;&nbsp;&nbsp;
                         <button type="button" onclick="MEDIA.deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn
                         </button>
@@ -50,9 +50,8 @@
                     </div>
 
                     <div class="box-body">
-                        <form action="{!! route('admin::media::add') !!}" id="formUploadMedia" class="dropzone" hidden>
+                        <form ng-show="showDropzone" dropzone="uploadImagePopup" class="dropzone">
                             {!! csrf_field() !!}
-                            <i class="fa fa-times" onclick="MEDIA.closeUploadMedia()"></i>
                             <div class="dz-message needsclick">
                                 <h3>Kéo thả các các file vào đây để tải lên.</h3>
                                 <h6>hoặc</h6>
@@ -62,30 +61,46 @@
                             </div>
                         </form>
 
-                        <div class="row" id="box-media">
-                            @foreach($media as $img)
-                                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                    <input type="checkbox" name="check" value="{!! $img['id'] !!}">
-                                    <a href="javascript:void(0)" data-id="{!! $img['id'] !!}">
-                                        <img src="/public/{!! $img['thumbnail'] !!}"
-                                             alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
-                                             class="img-responsive img-bordered-sm">
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                        @if(!$media->isEmpty())
-                            <div class="row">
-                                <div class="col-xs-12 text-center">
-                                    <button id="loadMoreMedia" class="btn btn-flat load-more"
-                                            onclick="MEDIA.loadMoreMedia()" data-paging="2" data-year="{!! $year !!}"
-                                            data-month="{!! $month !!}">
-                                        <i class="fa fa-arrow-down"></i>
-                                        <img src="/public/glammy/images/circle-loading.gif" class="img-responsive">
-                                    </button>
-                                </div>
+                        <div when-windows-scroll-ends="loadMoreMedia()" ng-init="loadMoreMedia()" class="row">
+                            <div ng-repeat="img in media"
+                                 class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">
+                                <a href="javascript:void(0)" ng-click="selectImage(img)">
+                                    <img ng-src="/public/@{{ img.thumbnail }}" alt="@{{ img.alt }}"
+                                         class="img-responsive img-bordered-sm">
+                                </a>
                             </div>
-                        @endif
+                            <div ng-hide="paging == 0 || !loading" class="col-xs-12 text-center">
+                                <button class="btn btn-flat load-more">
+                                    <img src="/public/glammy/images/circle-loading.gif"
+                                         class="img-responsive">
+                                </button>
+                            </div>
+                        </div>
+
+                        {{--<div class="row" id="box-media">--}}
+                            {{--@foreach($media as $img)--}}
+                                {{--<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">--}}
+                                    {{--<input type="checkbox" name="check" value="{!! $img['id'] !!}">--}}
+                                    {{--<a href="javascript:void(0)" data-id="{!! $img['id'] !!}">--}}
+                                        {{--<img src="/public/{!! $img['thumbnail'] !!}"--}}
+                                             {{--alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"--}}
+                                             {{--class="img-responsive img-bordered-sm">--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
+                            {{--@endforeach--}}
+                        {{--</div>--}}
+                        {{--@if(!$media->isEmpty())--}}
+                            {{--<div class="row">--}}
+                                {{--<div class="col-xs-12 text-center">--}}
+                                    {{--<button id="loadMoreMedia" class="btn btn-flat load-more"--}}
+                                            {{--onclick="MEDIA.loadMoreMedia()" data-paging="2" data-year="{!! $year !!}"--}}
+                                            {{--data-month="{!! $month !!}">--}}
+                                        {{--<i class="fa fa-arrow-down"></i>--}}
+                                        {{--<img src="/public/glammy/images/circle-loading.gif" class="img-responsive">--}}
+                                    {{--</button>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--@endif--}}
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->

@@ -20,18 +20,30 @@ APP.config(["$httpProvider", function ($httpProvider) {
     $httpProvider.interceptors.push('interceptors');
 }]);
 
-APP.directive('whenScrollEnds', function () {
+APP.directive('whenElementScrollEnds', function () {
     return {
         restrict: "A",
         link: function (scope, element, attrs) {
             var raw = element[0];
             element.bind('scroll', (function () {
                 if (raw.scrollTop + raw.offsetHeight > raw.scrollHeight - 100) {
-                    scope.$apply(attrs.whenScrollEnds);
+                    scope.$apply(attrs.whenElementScrollEnds);
                 }
             }));
         }
     };
+});
+
+APP.directive('whenWindowsScrollEnds', function ($window) {
+    return {
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            var raw = angular.element($window);
+            angular.element($window).bind('scroll', function() {
+                console.log(raw.scrollHeight);
+            })
+        }
+    }
 });
 
 APP.directive('dropzone', function () {
@@ -92,7 +104,7 @@ APP.controller('MainCtrl', function ($scope, $http) {
         $scope.imageSelected = img;
     };
 
-    $scope.uploadImage = {
+    $scope.uploadImagePopup = {
         'eventHandlers': {
             'success': function (file, response) {
                 this.removeFile(file);
