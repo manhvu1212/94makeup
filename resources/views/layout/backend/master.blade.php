@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="94makeup-backend">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,7 +39,7 @@
 
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini fixed">
+<body ng-controller="MainCtrl" class="hold-transition skin-blue sidebar-mini fixed">
 
 {!! csrf_field() !!}
 
@@ -74,6 +74,9 @@
 @include('layout.backend.media')
 <!-- END POPUP MEDIA -->
 
+<script src="/public/components/angular/angular.min.js" type="text/javascript"></script>
+<script src="/public/components/angular-i18n/angular-locale_vi-vn.js" type="text/javascript"></script>
+
 <!-- jQuery 2.1.4 -->
 <script src="/public/components/adminlte-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -100,6 +103,7 @@
 <script src="/public/components/adminlte-2.3.0/dist/js/demo.js"></script>
 <!-- Site script -->
 <script src="/public/js/backend/admin.js"></script>
+<script src="/public/js/backend/app.js"></script>
 
 @yield('script')
 

@@ -1,4 +1,4 @@
-<div class="modal fade" tabindex="-1" id="select-media">
+<div ng-controller="MediaPopup" class="modal fade" tabindex="-1" id="select-media">
     <div class="modal-dialog modal-media">
         <div class="modal-content">
             <div class="nav-tabs-custom">
@@ -27,12 +27,20 @@
                     </div>
                     <div role="tabpanel" class="tab-pane active" id="select">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                            <div class="col-xs-6 col-sm-7 col-md-8 col-lg-9 show-media">
                                 <div class="row" id="show-media">
 
                                 </div>
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <button id="loadMoreMediaPopup" class="btn btn-flat load-more" data-paging="1">
+                                            <i class="fa fa-arrow-down"></i>
+                                            <img src="/public/glammy/images/circle-loading.gif" class="img-responsive">
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                            <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
 
                             </div>
                         </div>

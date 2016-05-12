@@ -1,3 +1,7 @@
+input[type=checkbox] {
+    display: none;
+}
+
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small {
     text-transform: lowercase;
 }
@@ -20,6 +24,7 @@
 
 .load-more {
     background: transparent;
+    height: 46px;
 }
 
 .load-more img {
@@ -35,8 +40,18 @@
 }
 
 .box-media .media-item .icheckbox_square-blue {
+
+}
+
+.box-media .media-item .icheckbox_square-blue {
     position: absolute;
-    background-color: rgba(60, 141, 188, 0.6);
+    background-color: rgba(60, 141, 188, 1);
+    display: none;
+}
+
+.box-media .media-item .icheckbox_square-blue.checked,
+.box-media .media-item:hover .icheckbox_square-blue {
+    display: block;
 }
 
 .box-media .img-bordered-sm {
@@ -86,4 +101,9 @@
 .modal-media .modal-body .info-render {
     padding-bottom: 15px;
     padding-top: 15px;
+}
+
+.show-media {
+    max-height: calc(100vh - 124px);
+    overflow: auto;
 }

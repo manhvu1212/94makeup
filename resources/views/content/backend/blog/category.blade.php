@@ -54,10 +54,6 @@
                                 <input type="text" class="form-control" name="name">
                             </div>
                             <div class="form-group">
-                                <label>Slug</label>
-                                <input type="text" class="form-control" name="slug">
-                            </div>
-                            <div class="form-group">
                                 <label>Cha</label>
                                 <select class="form-control">
                                     <option>Trống</option>
@@ -68,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Ảnh đại diện</label>
-                                <button type="button" class="btn btn-flat btn-block" onclick="ADMIN.selectMedia()">Chọn ảnh</button>
+                                <button type="button" class="btn btn-flat btn-block" onclick="ADMIN.selectBtnMedia()">Chọn ảnh</button>
                             </div>
                             <div class="form-group">
                                 <label>Mô tả</label>

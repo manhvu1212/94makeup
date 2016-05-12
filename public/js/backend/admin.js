@@ -1,4 +1,6 @@
 var ADMIN = {
+    allowLoadMoreMedia: true,
+
     icheck: function () {
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
@@ -7,25 +9,78 @@ var ADMIN = {
         });
     },
 
-    selectMedia: function () {
-        $('#show-media').empty();
+    selectBtnMedia: function () {
+        $('#select-media').modal('show');
+        if(ADMIN.allowLoadMoreMedia) {
+            ADMIN.loadMoreMedia();
+            ADMIN.closeMediaPopup();
+        }
+        ADMIN.allowLoadMoreMedia = true;
+    },
+
+    closeMediaPopup: function() {
+        $('#select-media').on('hidden.bs.modal', function () {
+            ADMIN.allowLoadMoreMedia = false;
+        })
+    },
+
+    scrollLoadMoreMediaPopup: function() {
+        $('.show-media').scroll(function () {
+            if($('#show-media').offset().top + $('#show-media').height() < $('.show-media').height() + 200 && ADMIN.allowLoadMoreMedia) {
+                ADMIN.loadMoreMedia();
+            }
+        });
+    },
+
+    loadMoreMedia: function() {
+        var loadMore = $('#loadMoreMediaPopup');
+        var paging = loadMore.data('paging');
+
+        var url = '/admin/media/' + paging;
+
         $.ajax({
             type: 'post',
-            url: '/admin/media/1',
+            url: url,
             data: {
                 _token: $('input[name=_token]').val()
             },
+            beforeSend: function () {
+                ADMIN.allowLoadMoreMedia = false;
+                loadMore.attr('disabled', 'disabled');
+                loadMore.find('i').hide();
+                loadMore.find('img').show();
+            },
             success: function (response) {
-                $.each(response, function (index, value) {
-                    var ele = $('<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">')
-                        .append($('<div class="media-item">')
-                            .append($('<a href="javascript:void(0)">')
-                                .append('<img src="/public/' + value.thumbnail + '" alt="" class="img-responsive img-bordered-sm">')));
-                    $('#show-media').append(ele);
-                });
+                if(response.length > 0) {
+                    $.each(response, function (index, value) {
+                        var ele = $('<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">')
+                            .append($('<div class="media-item">')
+                                .append($('<a href="javascript:ADMIN.showMediaDetail()">')
+                                    .append('<img src="/public/' + value.thumbnail + '" alt="" class="img-responsive img-bordered-sm">')));
+                        ele.find('img').load(function () {
+                            $('#show-media').append(ele.hide().fadeIn(2000));
+                        });
+                    });
+                    loadMore.data('paging', paging + 1);
+                } else {
+                    loadMore.remove();
+                    ADMIN.allowLoadMoreMedia = false;
+                }
+
+            },
+            complete: function() {
+                if($('#loadMoreMediaPopup').length > 0) {
+                    ADMIN.allowLoadMoreMedia = true;
+                    loadMore.removeAttr('disabled');
+                    loadMore.find('i').show();
+                    loadMore.find('img').hide();
+                }
             }
         });
-        $('#select-media').modal('show');
+    },
+
+    showMediaDetail: function() {
+        console.log(1);
     },
 
     dropzoneInit: function () {
@@ -50,4 +105,8 @@ var ADMIN = {
 $(document).ready(function () {
     ADMIN.icheck();
     ADMIN.dropzoneInit();
+});
+
+$(window).load(function(){
+    ADMIN.scrollLoadMoreMediaPopup();
 });

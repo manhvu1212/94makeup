@@ -29,7 +29,7 @@ var MEDIA = {
                             )
                         );
                     ele.find('img').load(function () {
-                        $('#box-media').prepend(ele);
+                        $('#box-media').prepend(ele.hide().fadeIn(2000));
                         ele.find('input').iCheck({
                             checkboxClass: 'icheckbox_square-blue',
                             radioClass: 'iradio_square-blue',
@@ -100,7 +100,11 @@ var MEDIA = {
             data: {
                 _token: $('input[name=_token]').val()
             },
+            beforeSend: function() {
+                $('#imgRender').append($('<img src="/public/glammy/images/circle-loading.gif" class="img-responsive">'));
+            },
             success: function (img) {
+                $('#imgRender').empty();
                 $('#imgRender').append($('<img src="/public/' + img.full + '" class="img-responsive">'));
                 $('#infoRender').parents('form').attr('action', "/admin/media/save/" + img.id);
                 $('#infoRender').append($('<div class="box-body">')
@@ -139,8 +143,8 @@ var MEDIA = {
     autoload: function () {
         var wHeight = $(window).height();
         $(window).scroll(function () {
-            if ($('.load-more').length > 0 && MEDIA.allowCallLoadMore) {
-                var loadPosition = $('.load-more').offset().top;
+            if ($('#loadMoreMedia').length > 0 && MEDIA.allowCallLoadMore) {
+                var loadPosition = $('#loadMoreMedia').offset().top;
                 if ($(window).scrollTop() + 50 > loadPosition - wHeight) {
                     MEDIA.loadMoreMedia();
                 }
@@ -149,7 +153,7 @@ var MEDIA = {
     },
 
     loadMoreMedia: function () {
-        var loadMore = $('.load-more');
+        var loadMore = $('#loadMoreMedia');
         var paging = loadMore.data('paging');
         var year = loadMore.data('year');
         var month = loadMore.data('month');
@@ -184,7 +188,7 @@ var MEDIA = {
                                 )
                             );
                         ele.find('img').load(function () {
-                            $('#box-media').append(ele);
+                            $('#box-media').append(ele.hide().fadeIn(2000));
                             ele.find('input').iCheck({
                                 checkboxClass: 'icheckbox_square-blue',
                                 radioClass: 'iradio_square-blue',
