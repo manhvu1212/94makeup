@@ -65,21 +65,21 @@
                         <div class="row" id="box-media">
                             @foreach($media as $img)
                                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">
-                                    <div class="media-item">
-                                        <input type="checkbox" name="check" value="{!! $img['id'] !!}">
-                                        <a href="javascript:void(0)" data-id="{!! $img['id'] !!}">
-                                            <img src="/public/{!! $img['thumbnail'] !!}"
-                                                 alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
-                                                 class="img-responsive img-bordered-sm">
-                                        </a>
-                                    </div>
+                                    <input type="checkbox" name="check" value="{!! $img['id'] !!}">
+                                    <a href="javascript:void(0)" data-id="{!! $img['id'] !!}">
+                                        <img src="/public/{!! $img['thumbnail'] !!}"
+                                             alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"
+                                             class="img-responsive img-bordered-sm">
+                                    </a>
                                 </div>
                             @endforeach
                         </div>
                         @if(!$media->isEmpty())
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <button id="loadMoreMedia" class="btn btn-flat load-more" onclick="MEDIA.loadMoreMedia()" data-paging="2" data-year="{!! $year !!}" data-month="{!! $month !!}">
+                                    <button id="loadMoreMedia" class="btn btn-flat load-more"
+                                            onclick="MEDIA.loadMoreMedia()" data-paging="2" data-year="{!! $year !!}"
+                                            data-month="{!! $month !!}">
                                         <i class="fa fa-arrow-down"></i>
                                         <img src="/public/glammy/images/circle-loading.gif" class="img-responsive">
                                     </button>

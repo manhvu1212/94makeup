@@ -22,12 +22,9 @@ var MEDIA = {
                 this.on("success", function (file, img) {
                     this.removeFile(file);
                     var ele = $('<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media box-media-new">')
-                        .append($('<div class="media-item">')
-                            .append($('<input type="checkbox" name="check" value="' + img.id + '">'))
-                            .append($('<a href="javascript:void(0)" data-id="' + img.id + '">')
-                                .append($('<img src="/public/' + img.thumbnail + '" alt="' + img.filename + '" class="img-responsive img-bordered-sm">'))
-                            )
-                        );
+                        .append($('<input type="checkbox" name="check" value="' + img.id + '">'))
+                        .append($('<a href="javascript:void(0)" data-id="' + img.id + '">')
+                            .append($('<img src="/public/' + img.thumbnail + '" alt="' + img.filename + '" class="img-responsive img-bordered-sm">')));
                     ele.find('img').load(function () {
                         $('#box-media').prepend(ele.hide().fadeIn(2000));
                         ele.find('input').iCheck({
@@ -100,7 +97,7 @@ var MEDIA = {
             data: {
                 _token: $('input[name=_token]').val()
             },
-            beforeSend: function() {
+            beforeSend: function () {
                 $('#imgRender').append($('<img src="/public/glammy/images/circle-loading.gif" class="img-responsive">'));
             },
             success: function (img) {
@@ -169,7 +166,7 @@ var MEDIA = {
             data: {
                 _token: $('input[name=_token]').val()
             },
-            beforeSend: function() {
+            beforeSend: function () {
                 MEDIA.allowCallLoadMore = false;
                 loadMore.attr('disabled', 'disabled');
                 loadMore.find('i').hide();
@@ -181,12 +178,9 @@ var MEDIA = {
                 } else {
                     $.each(response, function (index, img) {
                         var ele = $('<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">')
-                            .append($('<div class="media-item">')
-                                .append($('<input type="checkbox" name="check" value="' + img.id + '">'))
-                                .append($('<a href="javascript:void(0)" data-id="' + img.id + '">')
-                                    .append($('<img src="/public/' + img.thumbnail + '" alt="' + img.filename + '" class="img-responsive img-bordered-sm">'))
-                                )
-                            );
+                            .append($('<input type="checkbox" name="check" value="' + img.id + '">'))
+                            .append($('<a href="javascript:void(0)" data-id="' + img.id + '">')
+                                .append($('<img src="/public/' + img.thumbnail + '" alt="' + img.filename + '" class="img-responsive img-bordered-sm">')));
                         ele.find('img').load(function () {
                             $('#box-media').append(ele.hide().fadeIn(2000));
                             ele.find('input').iCheck({
@@ -202,7 +196,7 @@ var MEDIA = {
                 }
                 loadMore.data('paging', paging + 1);
             },
-            complete: function() {
+            complete: function () {
                 MEDIA.allowCallLoadMore = true;
                 loadMore.removeAttr('disabled');
                 loadMore.find('i').show();
@@ -217,7 +211,7 @@ $(document).ready(function () {
     MEDIA.dropzoneInit();
     MEDIA.checkAll();
     MEDIA.unCheckAll();
-    $('.media-item a').bind('click', function () {
+    $('.box-media a').bind('click', function () {
         MEDIA.edit($(this).data('id'));
     });
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="94makeup-backend">
+<html ng-app="94makeupBackend">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,10 +33,7 @@
 
     <!-- Admin Style -->
     @yield('style')
-
     <link rel="stylesheet" href="/public/css/backend/style.css">
-
-
 </head>
 
 <body ng-controller="MainCtrl" class="hold-transition skin-blue sidebar-mini fixed">
@@ -76,7 +73,6 @@
 
 <script src="/public/components/angular/angular.min.js" type="text/javascript"></script>
 <script src="/public/components/angular-i18n/angular-locale_vi-vn.js" type="text/javascript"></script>
-
 <!-- jQuery 2.1.4 -->
 <script src="/public/components/adminlte-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

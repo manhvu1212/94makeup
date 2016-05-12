@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Ảnh đại diện</label>
-                                <button type="button" class="btn btn-flat btn-block" onclick="ADMIN.selectBtnMedia()">Chọn ảnh</button>
+                                <button type="button" ng-click="showMediaPopup()" class="btn btn-flat btn-block">Chọn ảnh</button>
                             </div>
                             <div class="form-group">
                                 <label>Mô tả</label>

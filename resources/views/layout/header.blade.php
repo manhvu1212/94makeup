@@ -11,7 +11,8 @@
                 <li><a href="my-account.html">Register</a></li>
             </ul>
 
-            <div class="live_chat"><a href="https://www.facebook.com/messages/538712199668656" target="_blank"><i class="fa fa-comment-o"></i> Live chat</a></div>
+            <div class="live_chat"><a href="https://www.facebook.com/messages/538712199668656" target="_blank"><i
+                            class="fa fa-comment-o"></i> Live chat</a></div>
 
             <div class="phone_top">Hotline? <a href="tel:0163 570 9612">0163 570 9612</a></div>
         </div><!-- //CONTAINER -->
@@ -32,7 +33,7 @@
             <!-- USER LOGIN -->
             <div class="user_login" ng-show="loginStatus.status == 'connected'">
                 <a class="user_login_btn" href="javascript:void(0);">
-                    <img class="img-responsive" ng-src="@{{apiMe.avatar}}">
+                    <img class="img-responsive" ng-src="@{{ apiMe.avatar }}">
                 </a>
                 <div class="cart">
                     <ul class="cart-items">
@@ -48,7 +49,8 @@
                                 &nbsp;
                                 @{{ apiMe.birthday | date:'dd LLLL yyyy' }}
                                 <p ng-hide="apiMe.dayDiff == 0">còn @{{ apiMe.dayDiff }} ngày nữa tới sinh nhật bạn</p>
-                                <p ng-show="apiMe.dayDiff == 0">Chúc bạn sinh nhật tuổi @{{ apiMe.age }} thật ý nghĩa và vui vẻ nhé</p>
+                                <p ng-show="apiMe.dayDiff == 0">Chúc bạn sinh nhật tuổi @{{ apiMe.age }} thật ý nghĩa và
+                                    vui vẻ nhé</p>
                             </div>
                         </li>
                     </ul>
@@ -70,29 +72,29 @@
 
             {{--<!-- SHOPPING BAG -->--}}
             {{--<div class="shopping_bag">--}}
-                {{--<a class="shopping_bag_btn" href="javascript:void(0);">--}}
-                    {{--<i class="fa fa-shopping-cart"></i>--}}
-                    {{--<p>shopping bag</p><span>2</span>--}}
-                {{--</a>--}}
-                {{--<div class="cart">--}}
-                    {{--<ul class="cart-items">--}}
-                        {{--<li class="clearfix">--}}
-                            {{--<img class="cart_item_product" src="/public/glammy/images/tovar/women/1.jpg" alt=""/>--}}
-                            {{--<a href="product-page.html" class="cart_item_title">popover sweatshirt in floral--}}
-                                {{--jacquard</a>--}}
-                            {{--<span class="cart_item_price">1 × $98.00</span>--}}
-                        {{--</li>--}}
-                        {{--<li class="clearfix">--}}
-                            {{--<img class="cart_item_product" src="/public/glammy/images/tovar/women/3.jpg" alt=""/>--}}
-                            {{--<a href="product-page.html" class="cart_item_title">japanese indigo denim jacket</a>--}}
-                            {{--<span class="cart_item_price">2 × $158.00</span>--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
-                    {{--<div class="cart_total">--}}
-                        {{--<div class="clearfix"><span class="cart_subtotal">bag subtotal: <b>$414</b></span></div>--}}
-                        {{--<a class="btn active" href="checkout.html">Checkout</a>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+            {{--<a class="shopping_bag_btn" href="javascript:void(0);">--}}
+            {{--<i class="fa fa-shopping-cart"></i>--}}
+            {{--<p>shopping bag</p><span>2</span>--}}
+            {{--</a>--}}
+            {{--<div class="cart">--}}
+            {{--<ul class="cart-items">--}}
+            {{--<li class="clearfix">--}}
+            {{--<img class="cart_item_product" src="/public/glammy/images/tovar/women/1.jpg" alt=""/>--}}
+            {{--<a href="product-page.html" class="cart_item_title">popover sweatshirt in floral--}}
+            {{--jacquard</a>--}}
+            {{--<span class="cart_item_price">1 × $98.00</span>--}}
+            {{--</li>--}}
+            {{--<li class="clearfix">--}}
+            {{--<img class="cart_item_product" src="/public/glammy/images/tovar/women/3.jpg" alt=""/>--}}
+            {{--<a href="product-page.html" class="cart_item_title">japanese indigo denim jacket</a>--}}
+            {{--<span class="cart_item_price">2 × $158.00</span>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
+            {{--<div class="cart_total">--}}
+            {{--<div class="clearfix"><span class="cart_subtotal">bag subtotal: <b>$414</b></span></div>--}}
+            {{--<a class="btn active" href="checkout.html">Checkout</a>--}}
+            {{--</div>--}}
+            {{--</div>--}}
             {{--</div><!-- //SHOPPING BAG -->--}}
 
                     <!-- LOVE LIST -->
