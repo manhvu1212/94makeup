@@ -23,7 +23,7 @@ class MediaController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('content.backend.media.index', ['media' => $this->getMedia(), 'filters' => $filters, 'year' => $year, 'month' => $month]);
+        return view('content.backend.media.index', ['filters' => $filters, 'year' => $year, 'month' => $month]);
     }
 
     public function getMedia($paging = 1, $year = null, $month = null)
@@ -99,13 +99,13 @@ class MediaController extends Controller
         }
 
         $media = new Media();
-        $media->filename = $filename;
+        $media->alt = $filename;
         $media->full = $destinationPath . '/' . $fileUpload;
         $media->crop = $destinationPath . '/' . $fileCrop;
         $media->thumbnail = $destinationPath . '/' . $fileThumbnail;
         $media->author = Session::get('user.id');
         $media->save();
-        $media->url = route('admin::media::edit', $media->id);
+        $media->nameAuthor = Session::get('user.name');
 
         return $media;
     }
@@ -114,12 +114,16 @@ class MediaController extends Controller
     {
         $media = Media::find($id);
         $author = $this->fb->get('/' . $media->author, Session::get('user.token'))->getDecodedBody();
-        $media->nameAuthor = $author['name'];
-        return $media;
+        return $author['name'];
     }
 
     public function save($id)
     {
+        $input = Input::all();
+        $media = Media::find($id);
+        $media->alt = $input['alt'];
+        $media->description = $input['description'];
+        $media->save();
         return 1;
     }
 

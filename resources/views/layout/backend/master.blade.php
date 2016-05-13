@@ -99,7 +99,6 @@
 <script src="/public/components/adminlte-2.3.0/dist/js/demo.js"></script>
 <!-- Site script -->
 <script src="/public/js/backend/admin.js"></script>
-<script src="/public/js/backend/app.js"></script>
 
 @yield('script')
 

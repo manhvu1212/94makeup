@@ -38,9 +38,10 @@
                             @endforeach
                         </select>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" ng-click="showDropzone = !showDropzone" class="btn btn-danger">Thêm</button>
+                        <button type="button" ng-click="showDropzone = !showDropzone" class="btn btn-danger">Thêm
+                        </button>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" onclick="MEDIA.deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn
+                        <button type="button" ng-click="deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn
                         </button>
                         <div class="checkbox form-control-media">
                             <label>
@@ -61,9 +62,10 @@
                             </div>
                         </form>
 
-                        <div when-windows-scroll-ends="loadMoreMedia()" ng-init="loadMoreMedia()" class="row">
-                            <div ng-repeat="img in media"
-                                 class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">
+                        <div when-windows-scroll-ends="loadMoreMedia()"
+                             ng-init="loadMoreMedia('{{  $year }}', '{{ $month }}')" class="row">
+                            <div ng-repeat="(key, img) in media" class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">
+                                <input type="checkbox" name="check" value="@{{ key }}">
                                 <a href="javascript:void(0)" ng-click="selectImage(img)">
                                     <img ng-src="/public/@{{ img.thumbnail }}" alt="@{{ img.alt }}"
                                          class="img-responsive img-bordered-sm">
@@ -76,31 +78,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        {{--<div class="row" id="box-media">--}}
-                            {{--@foreach($media as $img)--}}
-                                {{--<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 box-media">--}}
-                                    {{--<input type="checkbox" name="check" value="{!! $img['id'] !!}">--}}
-                                    {{--<a href="javascript:void(0)" data-id="{!! $img['id'] !!}">--}}
-                                        {{--<img src="/public/{!! $img['thumbnail'] !!}"--}}
-                                             {{--alt="{!! isset($img['alt']) ? $img['alt'] : $img['filename'] !!}"--}}
-                                             {{--class="img-responsive img-bordered-sm">--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
-                            {{--@endforeach--}}
-                        {{--</div>--}}
-                        {{--@if(!$media->isEmpty())--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="col-xs-12 text-center">--}}
-                                    {{--<button id="loadMoreMedia" class="btn btn-flat load-more"--}}
-                                            {{--onclick="MEDIA.loadMoreMedia()" data-paging="2" data-year="{!! $year !!}"--}}
-                                            {{--data-month="{!! $month !!}">--}}
-                                        {{--<i class="fa fa-arrow-down"></i>--}}
-                                        {{--<img src="/public/glammy/images/circle-loading.gif" class="img-responsive">--}}
-                                    {{--</button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--@endif--}}
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -117,12 +94,48 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 img-render" id="imgRender">
-                            //
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 img-render">
+                            <img ng-src="/public/@{{ imageSelected.full }}" class="img-responsive">
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 info-render">
-                            <form class="form-horizontal" action="" method="post">
-                                <div id="infoRender"></div>
+                            <form action="@{{ '/admin/media/save' + imageSelected.id }}"
+                                  method="post" class="form-horizontal">
+                                {{ csrf_field() }}
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Văn bản thay thế</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="alt" value="@{{ imageSelected.alt }}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Chú thích</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" name="description" rows="3">
+                                                @{{ imageSelected.description }}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Tải lên bởi</label>
+                                        <div class="col-sm-9">
+                                            <label class="control-label">@{{ imageSelected.nameAuthor }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Ngày tải lên</label>
+                                        <div class="col-sm-9">
+                                            <label class="control-label">@{{ imageSelected.created_at | date: 'dd LLLL yyyy' }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-flat" data-dismiss="modal" aria-label="Close">
+                                        <span>Đóng</span>
+                                    </button>
+                                    <button type="submit" class="btn btn-flat btn-warning">Lưu</button>
+                                </div>
                             </form>
                         </div>
                     </div>
