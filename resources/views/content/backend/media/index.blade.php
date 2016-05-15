@@ -41,7 +41,10 @@
                         <button type="button" ng-click="showDropzone = !showDropzone" class="btn btn-danger">Thêm
                         </button>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" ng-click="deleteMultiple()" class="btn btn-default">Xóa ảnh đã chọn
+                        <button type="button" ng-disabled="loading" ng-click="deleteMultiple()" class="btn btn-default">
+                            <span ng-hide="loading">Xóa ảnh đã chọn</span>
+                            <img ng-show="loading" src="/public/glammy/images/circle-loading.gif"
+                                 class="img-responsive">
                         </button>
                         <div class="checkbox form-control-media">
                             <label>
@@ -66,7 +69,7 @@
                              ng-init="loadMoreMedia('{{  $year }}', '{{ $month }}')" class="row">
                             <div ng-repeat="(key, img) in media" class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">
                                 <input type="checkbox" name="check" value="@{{ key }}">
-                                <a href="javascript:void(0)" ng-click="selectImage(img)">
+                                <a href="javascript:void(0)" ng-click="selectMedia(img)">
                                     <img ng-src="/public/@{{ img.thumbnail }}" alt="@{{ img.alt }}"
                                          class="img-responsive img-bordered-sm">
                                 </a>
@@ -95,46 +98,47 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 img-render">
-                            <img ng-src="/public/@{{ imageSelected.full }}" class="img-responsive">
+                            <img ng-src="/public/@{{ mediaSelected[0].full }}" class="img-responsive">
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 info-render">
-                            <form action="@{{ '/admin/media/save' + imageSelected.id }}"
-                                  method="post" class="form-horizontal">
+                            <form ng-submit="saveMediaSelected()" class="form-horizontal">
                                 {{ csrf_field() }}
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Văn bản thay thế</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="alt" value="@{{ imageSelected.alt }}"
+                                            <input type="text" name="alt" ng-model="mediaSelected[0].alt"
                                                    class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Chú thích</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" name="description" rows="3">
-                                                @{{ imageSelected.description }}
-                                            </textarea>
+                                            <textarea ng-model="mediaSelected[0].description" class="form-control" name="description" rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Tải lên bởi</label>
                                         <div class="col-sm-9">
-                                            <label class="control-label">@{{ imageSelected.nameAuthor }}</label>
+                                            <label class="control-label">@{{ mediaSelected[0].nameAuthor }}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Ngày tải lên</label>
                                         <div class="col-sm-9">
-                                            <label class="control-label">@{{ imageSelected.created_at | date: 'dd LLLL yyyy' }}</label>
+                                            <label class="control-label">@{{ mediaSelected[0].created_at | date: 'dd LLLL yyyy' }}</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-flat" data-dismiss="modal" aria-label="Close">
-                                        <span>Đóng</span>
+                                        Đóng
                                     </button>
-                                    <button type="submit" class="btn btn-flat btn-warning">Lưu</button>
+                                    <button type="submit" ng-disabled="loading" class="btn btn-flat btn-warning">
+                                        <span ng-hide="loading">Lưu</span>
+                                        <img ng-show="loading" src="/public/glammy/images/circle-loading.gif"
+                                             class="img-responsive">
+                                    </button>
                                 </div>
                             </form>
                         </div>

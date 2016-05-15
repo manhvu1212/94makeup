@@ -63,8 +63,8 @@ Route::group(['middleware' => 'web'], function () {
                 Route::post('/add', ['as' => 'add', 'uses' => 'MediaController@add']);
                 Route::post('/save/{id}', ['as' => 'save', 'uses' => 'MediaController@save']);
                 Route::post('/delete/{id}', ['as' => 'delete', 'uses' => 'MediaController@delete']);
-                Route::post('/{paging}/{year?}/{month?}', ['as' => 'paging', 'uses' => 'MediaController@getMedia']);
-
+                Route::post('/{paging}', ['uses' => 'MediaController@getMedia']);
+                Route::post('/{paging}/{year}/{month}', ['uses' => 'MediaController@getMedia']);
             });
         });
     });

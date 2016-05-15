@@ -21,7 +21,7 @@
         </ol>
     </section>
 
-    <section class="content">
+    <section ng-controller="BlogCategory" class="content">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 col-md-push-5">
                 <div class="box box-primary">
@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Ảnh đại diện</label>
-                                <button type="button" ng-click="showMediaPopup()" class="btn btn-flat btn-block">Chọn ảnh</button>
+                                <button type="button" ng-click="openMediaPopup(1)" class="btn btn-flat btn-block">Chọn ảnh</button>
                             </div>
                             <div class="form-group">
                                 <label>Mô tả</label>

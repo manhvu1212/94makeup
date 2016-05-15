@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 /**
  *
- * start angularjs
+ * start angular js
  */
 
 var APP = angular.module('94makeupBackend', []);
@@ -47,11 +47,11 @@ APP.config(["$httpProvider", function ($httpProvider) {
 APP.directive('whenElementScrollEnds', function () {
     return {
         restrict: "A",
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attr) {
             var raw = element[0];
             element.bind('scroll', (function () {
                 if (raw.scrollTop + raw.offsetHeight > raw.scrollHeight - 150) {
-                    scope.$apply(attrs.whenElementScrollEnds);
+                    scope.$apply(attr.whenElementScrollEnds);
                 }
             }));
         }
@@ -61,8 +61,7 @@ APP.directive('whenElementScrollEnds', function () {
 APP.directive('whenWindowsScrollEnds', function ($window) {
     return {
         restrict: "A",
-        link: function (scope, element, attrs) {
-            var raw = element[0];
+        link: function (scope, element, attr) {
             angular.element($window).bind('scroll', function () {
                 var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
                 var body = document.body;
@@ -70,7 +69,7 @@ APP.directive('whenWindowsScrollEnds', function ($window) {
                 var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
                 var windowBottom = windowHeight + window.pageYOffset;
                 if (windowBottom > docHeight - 150) {
-                    scope.$apply(attrs.whenWindowsScrollEnds);
+                    scope.$apply(attr.whenWindowsScrollEnds);
                 }
             })
         }
@@ -99,18 +98,20 @@ APP.directive('dropzone', function () {
 APP.controller('MainCtrl', function ($timeout, $scope, $http) {
     $scope.media = [];
     $scope.newMedia = [];
-    $scope.imageSelected = [];
+    $scope.mediaSelected = [];
     $scope.paging = 1;
     $scope.year = '';
     $scope.month = '';
     $scope.loading = false;
+    $scope.maximumMedia = 1;
 
-    $scope.$watch('imageSelected', function() {
-        $scope.imageSelected.created_at = new Date($scope.imageSelected.created_at);
+    $scope.$watch('mediaSelected', function() {
+        $scope.mediaSelected.created_at = new Date($scope.mediaSelected.created_at);
     });
 
-    $scope.showMediaPopup = function () {
+    $scope.openMediaPopup = function (number) {
         $('#select-media').modal('show');
+        $scope.maximumMedia = number;
         $scope.loadMoreMedia();
     };
 
@@ -151,15 +152,24 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
         }
     };
 
-    $scope.selectImage = function (img) {
-        $http({
-            method: 'post',
-            url: '/admin/media/edit/' + img.id,
-        }).success(function (response) {
-            img.nameAuthor = response;
-        });
-        $scope.imageSelected = img;
-        $('#editMedia').modal('show');
+    $scope.selectMedia = function (img) {
+        var idx = $scope.mediaSelected.indexOf(img);
+        if (idx === -1) {
+            $http({
+                method: 'post',
+                url: '/admin/media/edit/' + img.id,
+            }).success(function (response) {
+                img.nameAuthor = response;
+            });
+            $scope.mediaSelected.unshift(img);
+            $scope.mediaSelected.splice($scope.maximumMedia, 1);
+            $('#editMedia').modal('show')
+                .on('hidden.bs.modal', function (e) {
+                $scope.mediaSelected.splice(0, 1);
+            });
+        } else {
+            $scope.mediaSelected.splice(idx, 1);
+        }
     };
 
     $scope.uploadImagePopup = {
@@ -168,7 +178,7 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
                 this.removeFile(file);
                 $scope.media.unshift(response);
                 $scope.newMedia.unshift(response);
-                $scope.imageSelected = response;
+                $scope.mediaSelected.unshift(response);;
                 $scope.$apply();
                 ADMIN.icheck();
                 if (typeof MEDIA !== 'undefined') {
@@ -178,4 +188,21 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
             }
         }
     };
+
+    $scope.saveMediaSelected = function() {
+        $http({
+            method: 'post',
+            url: '/admin/media/save/' + $scope.mediaSelected.id,
+            data: {
+                'alt' : $scope.mediaSelected.alt,
+                'description' : $scope.mediaSelected.description
+            },
+            beforeSend: function () {
+                $scope.loading = true;
+            },
+            complete: function () {
+                $scope.loading = false;
+            }
+        });
+    }
 });

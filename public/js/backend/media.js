@@ -28,7 +28,13 @@ APP.controller('MediaCtrl', function ($scope, $http) {
                     var image = $scope.media[idx];
                     $http({
                         method: 'post',
-                        url: '/admin/media/delete/' + image.id
+                        url: '/admin/media/delete/' + image.id,
+                        beforeSend: function () {
+                            $scope.loading = true;
+                        },
+                        complete: function () {
+                            $scope.loading = false;
+                        }
                     }).success(function (response) {
                         $scope.media.splice(idx, 1);
                     });
