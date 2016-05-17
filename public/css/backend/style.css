@@ -6,6 +6,11 @@ button.btn img {
     height: 20px;
 }
 
+.img-thumbnail {
+    width: 100px;
+    cursor: pointer;
+}
+
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small {
     text-transform: lowercase;
 }
@@ -112,6 +117,7 @@ button.btn img {
 }
 
 .media-detail .tab-pane img {
-    max-height: calc(100vh - 189px);
+    max-height: 300px;
     margin: auto;
+    margin-bottom: 20px;
 }

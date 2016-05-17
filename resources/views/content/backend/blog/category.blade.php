@@ -51,11 +51,11 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label>Tên</label>
-                                <input type="text" class="form-control" name="name">
+                                <input type="text" class="form-control" name="name" ng-required="true">
                             </div>
                             <div class="form-group">
                                 <label>Cha</label>
-                                <select class="form-control">
+                                <select class="form-control" name="parent">
                                     <option>Trống</option>
                                     @foreach($categories as $category)
                                         <option value="{!! $category['id'] !!}">{!! $category['name'] !!}</option>
@@ -64,7 +64,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Ảnh đại diện</label>
-                                <button type="button" ng-click="openMediaPopup(1)" class="btn btn-flat btn-block">Chọn ảnh</button>
+                                <img ng-src="/public/@{{ imageCategory.thumbnail }}" ng-click="openMediaPopup(1)"
+                                     class="img-responsive img-thumbnail">
+                                <input type="hidden" name="image" value="@{{ imageCategory.id }}">
+                                <a href="javascript:void(0)" ng-click="removeImageCategory()">xóa</a>
                             </div>
                             <div class="form-group">
                                 <label>Mô tả</label>

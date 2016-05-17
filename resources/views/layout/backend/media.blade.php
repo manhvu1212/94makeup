@@ -37,10 +37,10 @@
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="select">
                                 <div when-element-scroll-ends="loadMoreMedia()" class="row show-media">
-                                    <div ng-repeat="img in media"
+                                    <div ng-repeat="(key,img) in media" ng-click="selectMedia($event, img)"
                                          class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">
-                                        <input type="checkbox" name="check" value="@{{ key }}">
-                                        <a href="javascript:void(0)" ng-click="selectMedia(img)">
+                                        <input type="checkbox" name="check" value="@{{ key }}" disabled>
+                                        <a href="javascript:void(0)">
                                             <img ng-src="/public/@{{ img.thumbnail }}" alt="@{{ img.alt }}"
                                                  class="img-responsive img-bordered-sm">
                                         </a>
@@ -65,14 +65,13 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active">
-                                <img ng-repeat="img in mediaSelected" ng-src="/public/@{{ img.crop }}" class="img-responsive">
+                                <img ng-repeat="img in mediaSelected" ng-src="/public/@{{ img.crop }}" class="img-bordered-sm img-responsive">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-flat" data-dismiss="modal" aria-label="Close">Đóng</button>
-                        <button type="button" ng-show="mediaSelected.length != 0" ng-click="mediaSelected = []" class="btn btn-flat btn-danger">Bỏ ảnh</button>
-                        <button type="button" ng-show="mediaSelected.length != 0" class="btn btn-flat btn-info">Chèn ảnh</button>
+                        <button type="button" ng-show="mediaSelected.length != 0" ng-click="insertImage()" class="btn btn-flat btn-info">Chèn ảnh</button>
                     </div>
                 </div>
             </div>

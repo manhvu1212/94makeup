@@ -99,18 +99,21 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
     $scope.media = [];
     $scope.newMedia = [];
     $scope.mediaSelected = [];
+    $scope.mediaInserted = [{
+        'thumbnail': 'glammy/images/upload-empty.png'
+    }];
     $scope.paging = 1;
     $scope.year = '';
     $scope.month = '';
     $scope.loading = false;
     $scope.maximumMedia = 1;
 
-    $scope.$watch('mediaSelected', function() {
-        $scope.mediaSelected.created_at = new Date($scope.mediaSelected.created_at);
-    });
-
     $scope.openMediaPopup = function (number) {
-        $('#select-media').modal('show');
+        $('#select-media').modal('show').on('hidden.bs.modal', function (e) {
+            $scope.mediaSelected = [];
+            $('input[name=check]').iCheck('uncheck');
+        });
+        ;
         $scope.maximumMedia = number;
         $scope.loadMoreMedia();
     };
@@ -152,7 +155,7 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
         }
     };
 
-    $scope.selectMedia = function (img) {
+    $scope.selectMedia = function ($event, img) {
         var idx = $scope.mediaSelected.indexOf(img);
         if (idx === -1) {
             $http({
@@ -161,14 +164,21 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
             }).success(function (response) {
                 img.nameAuthor = response;
             });
+
+            img.created_at = new Date(img.created_at);
             $scope.mediaSelected.unshift(img);
+            var idUncheck = $scope.media.indexOf($scope.mediaSelected[$scope.maximumMedia]);
             $scope.mediaSelected.splice($scope.maximumMedia, 1);
+
+            $($event.currentTarget.querySelector('input')).iCheck('check');
+            $('input[value=' + idUncheck + ']').iCheck('uncheck');
             $('#editMedia').modal('show')
                 .on('hidden.bs.modal', function (e) {
-                $scope.mediaSelected.splice(0, 1);
-            });
+                    $scope.mediaSelected.splice(0, 1);
+                });
         } else {
             $scope.mediaSelected.splice(idx, 1);
+            $($event.currentTarget.querySelector('input')).iCheck('uncheck');
         }
     };
 
@@ -178,7 +188,8 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
                 this.removeFile(file);
                 $scope.media.unshift(response);
                 $scope.newMedia.unshift(response);
-                $scope.mediaSelected.unshift(response);;
+                $scope.mediaSelected.unshift(response);
+                ;
                 $scope.$apply();
                 ADMIN.icheck();
                 if (typeof MEDIA !== 'undefined') {
@@ -189,13 +200,13 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
         }
     };
 
-    $scope.saveMediaSelected = function() {
+    $scope.saveMediaSelected = function () {
         $http({
             method: 'post',
             url: '/admin/media/save/' + $scope.mediaSelected.id,
             data: {
-                'alt' : $scope.mediaSelected.alt,
-                'description' : $scope.mediaSelected.description
+                'alt': $scope.mediaSelected.alt,
+                'description': $scope.mediaSelected.description
             },
             beforeSend: function () {
                 $scope.loading = true;
@@ -204,5 +215,10 @@ APP.controller('MainCtrl', function ($timeout, $scope, $http) {
                 $scope.loading = false;
             }
         });
-    }
+    };
+
+    $scope.insertImage = function () {
+        $scope.mediaInserted = $scope.mediaSelected;
+        $('#select-media').modal('hide');
+    };
 });

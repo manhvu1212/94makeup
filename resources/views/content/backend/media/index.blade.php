@@ -69,7 +69,7 @@
                              ng-init="loadMoreMedia('{{  $year }}', '{{ $month }}')" class="row">
                             <div ng-repeat="(key, img) in media" class="col-xs-6 col-sm-4 col-md-3 col-lg-2 box-media">
                                 <input type="checkbox" name="check" value="@{{ key }}">
-                                <a href="javascript:void(0)" ng-click="selectMedia(img)">
+                                <a href="javascript:void(0)" ng-click="selectMedia($event, img)">
                                     <img ng-src="/public/@{{ img.thumbnail }}" alt="@{{ img.alt }}"
                                          class="img-responsive img-bordered-sm">
                                 </a>
