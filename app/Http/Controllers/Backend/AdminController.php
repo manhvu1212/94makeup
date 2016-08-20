@@ -18,12 +18,13 @@ class AdminController extends Controller
 
     public function login()
     {
-        if (!Session::has('user.id') || Session::get('user.role') != 'ADMINISTER') {
-            $helper = $this->fb->getRedirectLoginHelper();
-            return Redirect::to($helper->getLoginUrl(route('admin::loginCallback'), ['email', 'user_friends', 'user_birthday', 'manage_pages']));
-        } else {
-            return redirect(route('admin::dashboard'));
-        }
+        return view('layout.backend.login');
+        // if (!Session::has('user.id') || Session::get('user.role') != 'ADMINISTER') {
+        //     $helper = $this->fb->getRedirectLoginHelper();
+        //     return Redirect::to($helper->getLoginUrl(route('admin::loginCallback'), ['email', 'user_friends', 'user_birthday', 'manage_pages']));
+        // } else {
+        //     return redirect(route('admin::dashboard'));
+        // }
     }
 
     public function loginCallback()

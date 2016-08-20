@@ -21,6 +21,12 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::group(['as' => 'admin::', 'namespace' => 'Backend', 'prefix' => 'admin'], function () {
+        
+        Route::group(['middleware' => 'guest'], function() {
+            Route::get('/login', ['as' => 'login', 'uses' => 'AdminController@login']);
+        });
+        
+
         Route::get('/', ['as' => 'login', 'uses' => 'AdminController@login']);
         Route::get('/login/callback', ['as' => 'loginCallback', 'uses' => 'AdminController@loginCallback']);
         Route::get('/logout', ['as' => 'logout', 'uses' => 'AdminController@logout']);
